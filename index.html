@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Instituto Marias</title>
+<script src="https://unpkg.com/netlify-identity-widget@1/build/netlify-identity-widget.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --rosa:#c0576e;--rosa-claro:#f5dce2;--vinho:#6b2336;
+  --creme:#faf7f4;--cinza:#5a5a5a;--cinza-claro:#e8e4e0;
+  --texto:#1e1e1e;--branco:#fff;--max:1100px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;color:var(--texto);background:var(--creme);font-size:15px;line-height:1.7}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:600;line-height:1.25}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.w{max-width:var(--max);margin:0 auto;padding:0 2rem}
+
+/* HEADER */
+header{background:var(--vinho);border-bottom:3px solid var(--rosa);position:sticky;top:0;z-index:100}
+.hinner{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:var(--max);margin:0 auto;padding:0 2rem}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-circle{width:40px;height:40px;border-radius:50%;background:var(--rosa-claro);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:16px;color:var(--vinho);font-weight:600;flex-shrink:0}
+.logo-name{color:#fff;font-family:'Playfair Display',serif;font-size:16px}
+nav{display:flex;gap:1.8rem;align-items:center}
+nav a{color:rgba(255,255,255,0.78);font-size:13px;font-weight:500;transition:color .2s}
+nav a:hover{color:var(--rosa-claro)}
+.btn-nav{background:var(--rosa);color:#fff;padding:7px 18px;border-radius:40px;font-size:13px;font-weight:500}
+
+/* HERO */
+.hero{background:var(--vinho);display:grid;grid-template-columns:1fr 1fr;min-height:480px}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:4rem 2.5rem 4rem 2rem}
+.tag{display:inline-block;background:var(--rosa);color:#fff;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:40px;margin-bottom:1.2rem;width:fit-content}
+.hero-left h1{font-size:2.4rem;color:#fff;margin-bottom:1rem}
+.hero-left p{color:rgba(255,255,255,0.7);font-size:15px;max-width:400px;margin-bottom:1.8rem}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn-p{background:var(--rosa);color:#fff;padding:11px 24px;border-radius:40px;font-size:14px;font-weight:500}
+.btn-o{border:1.5px solid rgba(255,255,255,0.35);color:rgba(255,255,255,0.82);padding:11px 24px;border-radius:40px;font-size:14px;font-weight:500}
+.hero-right{display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;background:rgba(0,0,0,0.2)}
+.hero-right img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.5}
+.hero-right-ph{display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;z-index:1;color:rgba(255,255,255,0.35);font-size:13px}
+.nums{display:flex;gap:2.5rem;position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:1}
+.num strong{display:block;font-family:'Playfair Display',serif;font-size:1.9rem;color:#fff;text-align:center}
+.num span{font-size:11px;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:0.06em}
+
+/* SEÇÕES */
+section{padding:4.5rem 0}
+.slabel{font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--rosa);font-weight:500;margin-bottom:0.5rem}
+.stitle{font-size:2rem;margin-bottom:1rem}
+.sdesc{color:var(--cinza);max-width:520px;font-size:15px}
+.sheader{margin-bottom:3rem}
+
+/* SOBRE */
+.sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.sobre-img{background:var(--cinza-claro);border-radius:8px;height:320px;display:flex;align-items:center;justify-content:center;color:var(--cinza);font-size:13px;overflow:hidden}
+.sobre-img img{width:100%;height:100%;object-fit:cover}
+.sobre-text p{color:var(--cinza);font-size:15px;margin-bottom:1rem}
+
+/* MVV */
+.mvv{background:var(--vinho)}
+.mvv .stitle,.mvv .slabel{color:#fff}
+.mvv .sdesc{color:rgba(255,255,255,0.65)}
+.mvv-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.mvv-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:2rem}
+.mvv-icon{width:40px;height:40px;border-radius:50%;background:var(--rosa);display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem}
+.mvv-card h3{font-size:1.1rem;color:#fff;margin-bottom:0.6rem}
+.mvv-card p{font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7}
+
+/* PRESIDÊNCIA */
+.pres-grid{display:grid;grid-template-columns:300px 1fr;gap:4rem;align-items:start}
+.pres-card{background:var(--branco);border-radius:8px;border:1px solid var(--cinza-claro);overflow:hidden}
+.pres-foto{background:var(--cinza-claro);height:280px;display:flex;align-items:center;justify-content:center;color:var(--cinza);font-size:13px;border-bottom:3px solid var(--rosa);overflow:hidden}
+.pres-foto img{width:100%;height:100%;object-fit:cover}
+.pres-info{padding:1.5rem}
+.pres-info h3{font-size:1.1rem;margin-bottom:0.2rem}
+.pres-cargo{font-size:12px;color:var(--rosa);font-weight:500;text-transform:uppercase;letter-spacing:0.08em}
+.pres-text p{color:var(--cinza);font-size:15px;margin-bottom:1rem}
+.lider-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:1.5rem}
+.lider-card{background:var(--branco);border-radius:8px;border:1px solid var(--cinza-claro);padding:1.2rem;display:flex;gap:12px;align-items:center}
+.lider-avatar{width:44px;height:44px;border-radius:50%;background:var(--rosa-claro);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:15px;color:var(--vinho);flex-shrink:0;font-weight:600}
+.lider-card h4{font-size:13px;font-weight:500;margin-bottom:2px}
+.lider-card span{font-size:11px;color:var(--cinza)}
+
+/* PROJETOS */
+.proj{background:var(--branco)}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.proj-card{border-radius:8px;border:1px solid var(--cinza-claro);overflow:hidden}
+.proj-img{background:var(--rosa-claro);height:160px;display:flex;align-items:center;justify-content:center;color:var(--rosa);font-size:12px;border-bottom:3px solid var(--rosa);overflow:hidden}
+.proj-img img{width:100%;height:100%;object-fit:cover}
+.proj-body{padding:1.2rem}
+.proj-tag{display:inline-block;background:var(--rosa-claro);color:var(--vinho);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;padding:3px 10px;border-radius:40px;margin-bottom:0.6rem}
+.proj-body h3{font-size:1rem;margin-bottom:0.5rem}
+.proj-body p{font-size:13px;color:var(--cinza)}
+
+/* NOTÍCIAS */
+.noticias-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.noticia{border-radius:8px;background:var(--branco);border:1px solid var(--cinza-claro);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.noticia:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(107,35,54,0.1)}
+.noticia-img{background:var(--cinza-claro);height:140px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.noticia-img img{width:100%;height:100%;object-fit:cover}
+.noticia-body{padding:1.2rem}
+.noticia-data{font-size:11px;color:var(--rosa);font-weight:500;margin-bottom:0.4rem}
+.noticia-body h3{font-size:0.95rem;margin-bottom:0.5rem;line-height:1.35}
+.noticia-body p{font-size:13px;color:var(--cinza)}
+.empty-msg{text-align:center;padding:2.5rem;color:var(--cinza);font-size:14px;background:var(--branco);border-radius:8px;border:1px solid var(--cinza-claro);grid-column:1/-1}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;align-items:center;justify-content:center;padding:2rem}
+.modal-overlay.open{display:flex}
+.modal{background:var(--branco);border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:2.5rem;position:relative}
+.modal-close{position:absolute;top:1rem;right:1rem;background:var(--creme);border:none;border-radius:50%;width:32px;height:32px;font-size:16px;cursor:pointer;color:var(--cinza)}
+.modal-cat{font-size:11px;color:var(--rosa);font-weight:500;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem}
+.modal h2{font-size:1.6rem;margin-bottom:0.5rem;color:var(--vinho)}
+.modal-data{font-size:12px;color:var(--cinza);margin-bottom:1.5rem}
+.modal-img{width:100%;height:240px;object-fit:cover;border-radius:8px;margin-bottom:1.5rem}
+.modal-corpo{font-size:15px;color:var(--cinza);line-height:1.8}
+.modal-corpo p{margin-bottom:1rem}
+.modal-corpo h2,.modal-corpo h3{color:var(--vinho);margin-bottom:.5rem;margin-top:1rem}
+.modal-corpo ul,.modal-corpo ol{padding-left:1.5rem;margin-bottom:1rem}
+.modal-corpo li{margin-bottom:.3rem}
+.modal-corpo strong{color:var(--texto)}
+
+/* CRONOGRAMA */
+.crono{background:var(--creme)}
+.crono-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.timeline{position:relative;padding-left:2rem;margin-top:1.5rem}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--rosa-claro)}
+.titem{position:relative;margin-bottom:2rem;padding-left:1.5rem}
+.titem::before{content:'';position:absolute;left:-2.45rem;top:6px;width:14px;height:14px;border-radius:50%;background:var(--rosa);border:3px solid var(--creme)}
+.titem.passado{opacity:0.5}
+.titem.passado::before{background:var(--cinza-claro)}
+.titem-date{font-size:11px;color:var(--rosa);font-weight:500;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.2rem}
+.titem-cat{display:inline-block;background:var(--rosa-claro);color:var(--vinho);font-size:10px;padding:2px 8px;border-radius:40px;font-weight:500;margin-bottom:0.3rem}
+.titem h3{font-size:0.95rem;margin-bottom:0.3rem}
+.titem p{font-size:13px;color:var(--cinza)}
+.crono-cta{background:var(--vinho);border-radius:8px;padding:2.5rem}
+
+/* FOOTER */
+footer{background:var(--vinho);padding:3rem 0}
+.foot-inner{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3rem;max-width:var(--max);margin:0 auto;padding:0 2rem}
+.foot-brand p{color:rgba(255,255,255,0.55);font-size:13px;margin-top:0.8rem;max-width:220px}
+.foot-col h4{color:#fff;font-size:13px;font-weight:500;margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.06em}
+.foot-col ul{list-style:none}
+.foot-col li{margin-bottom:0.5rem}
+.foot-col a{color:rgba(255,255,255,0.55);font-size:13px;transition:color .2s}
+.foot-col a:hover{color:var(--rosa-claro)}
+.foot-bar{border-top:1px solid rgba(255,255,255,0.1);margin-top:2.5rem;padding-top:1.5rem;text-align:center;color:rgba(255,255,255,0.35);font-size:12px;max-width:var(--max);margin-left:auto;margin-right:auto;padding-left:2rem;padding-right:2rem}
+
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr}.hero-right{display:none}
+  .sobre-grid,.pres-grid,.crono-grid{grid-template-columns:1fr;gap:2rem}
+  .mvv-cards,.proj-grid,.noticias-grid,.lider-grid,.foot-inner{grid-template-columns:1fr}
+  nav{display:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hinner">
+    <div class="logo">
+      <div class="logo-circle">IM</div>
+      <span class="logo-name" id="site-nome">Instituto Marias</span>
+    </div>
+    <nav>
+      <a href="#sobre">Sobre</a>
+      <a href="#mvv">Missão</a>
+      <a href="#presidencia">Liderança</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#noticias">Notícias</a>
+      <a href="#cronograma">Agenda</a>
+      <a href="#contato" class="btn-nav">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="tag">Instituto Marias</div>
+    <h1 id="hero-titulo">Transformando vidas na periferia</h1>
+    <p id="hero-subtitulo">Assistência social, empoderamento e oportunidades para mulheres periféricas.</p>
+    <div class="btns">
+      <a href="#projetos" class="btn-p">Conheça nossos projetos</a>
+      <a href="#sobre" class="btn-o">Saiba mais</a>
+    </div>
+  </div>
+  <div class="hero-right" id="hero-right">
+    <div class="hero-right-ph" id="hero-ph">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1">
+        <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
+      </svg>
+      <span>Foto principal</span>
+    </div>
+    <div class="nums" id="hero-nums" style="display:none">
+      <div class="num"><strong id="num-at">—</strong><span>Mulheres atendidas</span></div>
+      <div class="num"><strong id="num-pr">—</strong><span>Projetos ativos</span></div>
+      <div class="num"><strong id="num-an">—</strong><span>Anos de atuação</span></div>
+    </div>
+  </div>
+</div>
+
+<section id="sobre">
+  <div class="w">
+    <div class="sobre-grid">
+      <div class="sobre-img" id="sobre-img-wrap">
+        <span id="sobre-img-ph">📸 Foto do instituto</span>
+      </div>
+      <div class="sobre-text">
+        <div class="sheader">
+          <p class="slabel">Sobre nós</p>
+          <h2 class="stitle" id="sobre-titulo">Quem somos</h2>
+        </div>
+        <p id="sobre-historia">Carregando...</p>
+        <p id="sobre-publico"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="mvv" class="mvv">
+  <div class="w">
+    <div class="sheader">
+      <p class="slabel">Nossa essência</p>
+      <h2 class="stitle">Missão, visão e valores</h2>
+    </div>
+    <div class="mvv-cards">
+      <div class="mvv-card">
+        <div class="mvv-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>Missão</h3><p id="mvv-missao">Carregando...</p>
+      </div>
+      <div class="mvv-card">
+        <div class="mvv-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/></svg></div>
+        <h3>Visão</h3><p id="mvv-visao">Carregando...</p>
+      </div>
+      <div class="mvv-card">
+        <div class="mvv-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <h3>Valores</h3><p id="mvv-valores">Carregando...</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="presidencia">
+  <div class="w">
+    <div class="sheader">
+      <p class="slabel">Liderança</p>
+      <h2 class="stitle">Presidência e equipe diretiva</h2>
+    </div>
+    <div class="pres-grid">
+      <div class="pres-card">
+        <div class="pres-foto" id="pres-foto-wrap">
+          <span id="pres-foto-ph">📸 Foto da presidenta</span>
+        </div>
+        <div class="pres-info">
+          <h3 id="pres-nome">Carregando...</h3>
+          <span class="pres-cargo" id="pres-cargo">Presidenta</span>
+        </div>
+      </div>
+      <div class="pres-text">
+        <p id="pres-bio"></p>
+        <p style="font-size:14px;color:var(--cinza);margin-top:2rem;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;">Outras lideranças</p>
+        <div class="lider-grid">
+          <div class="lider-card"><div class="lider-avatar" id="av-vice">—</div><div><h4 id="lider-vice">—</h4><span>Vice-presidência</span></div></div>
+          <div class="lider-card"><div class="lider-avatar" id="av-sec">—</div><div><h4 id="lider-sec">—</h4><span>Secretaria</span></div></div>
+          <div class="lider-card"><div class="lider-avatar" id="av-tes">—</div><div><h4 id="lider-tes">—</h4><span>Tesouraria</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projetos" class="proj">
+  <div class="w">
+    <div class="sheader">
+      <p class="slabel">O que fazemos</p>
+      <h2 class="stitle">Nossos projetos</h2>
+    </div>
+    <div class="proj-grid" id="projetos-grid">
+      <div class="empty-msg">Carregando projetos...</div>
+    </div>
+  </div>
+</section>
+
+<section id="noticias">
+  <div class="w">
+    <div class="sheader">
+      <p class="slabel">Novidades</p>
+      <h2 class="stitle">Últimas notícias</h2>
+    </div>
+    <div class="noticias-grid" id="noticias-grid">
+      <div class="empty-msg">Carregando notícias...</div>
+    </div>
+  </div>
+</section>
+
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)fecharModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="fecharModal()">✕</button>
+    <p class="modal-cat" id="modal-cat"></p>
+    <h2 id="modal-titulo"></h2>
+    <p class="modal-data" id="modal-data"></p>
+    <img id="modal-img" class="modal-img" src="" alt="" style="display:none"/>
+    <div class="modal-corpo" id="modal-corpo"></div>
+  </div>
+</div>
+
+<section id="cronograma" class="crono">
+  <div class="w">
+    <div class="crono-grid">
+      <div>
+        <div class="sheader">
+          <p class="slabel">Agenda</p>
+          <h2 class="stitle">Cronograma de atividades</h2>
+        </div>
+        <div class="timeline" id="timeline">
+          <p style="font-size:14px;color:var(--cinza)">Carregando eventos...</p>
+        </div>
+      </div>
+      <div class="crono-cta">
+        <p class="slabel" style="color:var(--rosa-claro)">Faça parte</p>
+        <h2 class="stitle" style="color:#fff;font-size:1.6rem">Apoie o Instituto Marias</h2>
+        <p style="color:rgba(255,255,255,0.65);font-size:14px;margin-bottom:1.8rem">Entre em contato para saber como colaborar com nossa causa.</p>
+        <a href="#contato" class="btn-p" style="width:fit-content">Entre em contato</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contato">
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <div class="logo">
+        <div class="logo-circle" style="width:36px;height:36px;font-size:14px">IM</div>
+        <span class="logo-name">Instituto Marias</span>
+      </div>
+      <p id="foot-slogan"></p>
+    </div>
+    <div class="foot-col">
+      <h4>Navegação</h4>
+      <ul>
+        <li><a href="#sobre">Sobre nós</a></li>
+        <li><a href="#mvv">Missão e valores</a></li>
+        <li><a href="#presidencia">Liderança</a></li>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#noticias">Notícias</a></li>
+        <li><a href="#cronograma">Agenda</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a id="foot-email" href="#">—</a></li>
+        <li><a id="foot-tel" href="#">—</a></li>
+        <li><span id="foot-end" style="color:rgba(255,255,255,0.55);font-size:13px">—</span></li>
+        <li style="margin-top:1rem"><a id="foot-ig" href="#" target="_blank">Instagram</a></li>
+        <li><a id="foot-fb" href="#" target="_blank">Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bar">© <span id="ano"></span> Instituto Marias · Todos os direitos reservados</div>
+</footer>
+
+<!-- marked.js para parsear Markdown -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<script>
+/* ── PARSER DE FRONT-MATTER ── */
+function parseMD(raw) {
+  const fm = {};
+  let body = raw;
+  const match = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  if (match) {
+    const lines = match[1].split('\n');
+    lines.forEach(line => {
+      const idx = line.indexOf(':');
+      if (idx === -1) return;
+      const key = line.slice(0, idx).trim();
+      const val = line.slice(idx + 1).trim().replace(/^["']|["']$/g, '');
+      fm[key] = val;
+    });
+    body = match[2].trim();
+  }
+  return { fm, body };
+}
+
+/* ── FETCH COM CACHE ── */
+const _cache = {};
+async function fetchMD(path) {
+  if (_cache[path]) return _cache[path];
+  try {
+    const r = await fetch(path + '?v=' + Date.now());
+    if (!r.ok) return null;
+    const text = await r.text();
+    _cache[path] = parseMD(text);
+    return _cache[path];
+  } catch { return null; }
+}
+
+/* ── LISTA ARQUIVOS NA PASTA ── */
+async function listarPasta(pasta) {
+  /* O Netlify serve um JSON de index quando há um _redirects ou netlify.toml configurado.
+     Alternativa: servimos um index.json gerado pelo CMS.
+     Para sites estáticos simples, listamos via fetch do arquivo gerado. */
+  try {
+    const r = await fetch(`/${pasta}/index.json?v=` + Date.now());
+    if (r.ok) return await r.json();
+  } catch {}
+  return [];
+}
+
+/* ── HELPERS ── */
+function setText(id, val, fallback='') {
+  const el = document.getElementById(id);
+  if (el) el.textContent = (val && val.trim()) ? val : fallback;
+}
+function setHTML(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = val || '';
+}
+function fmtData(iso) {
+  if (!iso) return '';
+  return new Date(iso + 'T12:00:00').toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
+}
+function iniciais(nome) {
+  if (!nome || nome.startsWith('[') || nome === '—') return '—';
+  return nome.trim().split(' ').filter(Boolean).slice(0,2).map(p=>p[0].toUpperCase()).join('');
+}
+function setFoto(wrapId, phId, src, alt) {
+  if (!src) return;
+  const wrap = document.getElementById(wrapId);
+  const ph   = document.getElementById(phId);
+  if (!wrap) return;
+  if (ph) ph.remove();
+  const img = document.createElement('img');
+  img.src = src; img.alt = alt || '';
+  img.style.cssText = 'width:100%;height:100%;object-fit:cover';
+  wrap.appendChild(img);
+}
+
+/* ── HERO ── */
+async function carregarHero() {
+  const d = await fetchMD('/_dados/hero.md');
+  if (!d) return;
+  const f = d.fm;
+  setText('hero-titulo',    f.titulo);
+  setText('hero-subtitulo', f.subtitulo);
+  if (f.foto) {
+    const wrap = document.getElementById('hero-right');
+    const ph   = document.getElementById('hero-ph');
+    if (ph) ph.remove();
+    const img = document.createElement('img');
+    img.src = f.foto; img.alt = 'Instituto Marias';
+    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.5';
+    wrap.appendChild(img);
+  }
+  const hasNums = f.num_atendidas || f.num_projetos || f.num_anos;
+  if (hasNums) {
+    setText('num-at', f.num_atendidas || '—');
+    setText('num-pr', f.num_projetos  || '—');
+    setText('num-an', f.num_anos      || '—');
+    document.getElementById('hero-nums').style.display = 'flex';
+  }
+}
+
+/* ── SOBRE ── */
+async function carregarSobre() {
+  const d = await fetchMD('/_dados/sobre.md');
+  if (!d) return;
+  const f = d.fm;
+  setText('sobre-titulo',   f.titulo,  'Quem somos');
+  setText('sobre-historia', f.historia,'');
+  setText('sobre-publico',  f.publico, '');
+  if (f.foto) setFoto('sobre-img-wrap', 'sobre-img-ph', f.foto, 'Sobre o Instituto Marias');
+}
+
+/* ── MVV ── */
+async function carregarMVV() {
+  const d = await fetchMD('/_dados/missao.md');
+  if (!d) return;
+  const f = d.fm;
+  setText('mvv-missao',  f.missao,  '');
+  setText('mvv-visao',   f.visao,   '');
+  setText('mvv-valores', f.valores, '');
+}
+
+/* ── PRESIDÊNCIA ── */
+async function carregarPresidencia() {
+  const d = await fetchMD('/_dados/presidencia.md');
+  if (!d) return;
+  const f = d.fm;
+  setText('pres-nome',  f.nome,  '');
+  setText('pres-cargo', f.cargo, 'Presidenta');
+  setText('pres-bio',   f.bio,   '');
+  if (f.foto) setFoto('pres-foto-wrap', 'pres-foto-ph', f.foto, f.nome);
+  setText('lider-vice', f.vice       || '—');
+  setText('lider-sec',  f.secretaria || '—');
+  setText('lider-tes',  f.tesouraria || '—');
+  document.getElementById('av-vice').textContent = iniciais(f.vice);
+  document.getElementById('av-sec').textContent  = iniciais(f.secretaria);
+  document.getElementById('av-tes').textContent  = iniciais(f.tesouraria);
+}
+
+/* ── PROJETOS ── */
+async function carregarProjetos() {
+  const d = await fetchMD('/_dados/projetos.md');
+  const grid = document.getElementById('projetos-grid');
+  if (!d) { grid.innerHTML = '<div class="empty-msg">Nenhum projeto cadastrado ainda.</div>'; return; }
+  const f = d.fm;
+  const projs = [
+    { foto: f.proj1_foto, nome: f.proj1_nome, cat: f.proj1_cat, desc: f.proj1_desc },
+    { foto: f.proj2_foto, nome: f.proj2_nome, cat: f.proj2_cat, desc: f.proj2_desc },
+    { foto: f.proj3_foto, nome: f.proj3_nome, cat: f.proj3_cat, desc: f.proj3_desc },
+  ].filter(p => p.nome && p.nome.trim());
+  if (!projs.length) {
+    grid.innerHTML = '<div class="empty-msg">Nenhum projeto cadastrado ainda. Adicione em Páginas → Projetos no painel.</div>';
+    return;
+  }
+  grid.innerHTML = projs.map(p => `
+    <div class="proj-card">
+      <div class="proj-img">
+        ${p.foto ? `<img src="${p.foto}" alt="${p.nome}"/>` : '📸'}
+      </div>
+      <div class="proj-body">
+        ${p.cat ? `<span class="proj-tag">${p.cat}</span>` : ''}
+        <h3>${p.nome}</h3>
+        <p>${p.desc || ''}</p>
+      </div>
+    </div>`).join('');
+}
+
+/* ── NOTÍCIAS ── */
+let _noticias = [];
+async function carregarNoticias() {
+  const grid = document.getElementById('noticias-grid');
+  const lista = await listarPasta('_noticias');
+  if (!lista.length) {
+    grid.innerHTML = '<div class="empty-msg">Nenhuma notícia publicada ainda.</div>';
+    return;
+  }
+  const promises = lista.slice(0, 6).map(f => fetchMD('/_noticias/' + f));
+  const docs = (await Promise.all(promises)).filter(Boolean);
+  _noticias = docs;
+  if (!docs.length) {
+    grid.innerHTML = '<div class="empty-msg">Nenhuma notícia publicada ainda.</div>';
+    return;
+  }
+  docs.sort((a,b) => (b.fm.data||'').localeCompare(a.fm.data||''));
+  grid.innerHTML = docs.map((d, i) => `
+    <div class="noticia" onclick="abrirNoticia(${i})">
+      <div class="noticia-img">
+        ${d.fm.foto ? `<img src="${d.fm.foto}" alt="${d.fm.titulo}" loading="lazy"/>` : '<span style="color:var(--cinza);font-size:12px">📰</span>'}
+      </div>
+      <div class="noticia-body">
+        <p class="noticia-data">${fmtData(d.fm.data)} · ${d.fm.categoria || 'Notícias'}</p>
+        <h3>${d.fm.titulo || ''}</h3>
+        <p>${d.fm.resumo || ''}</p>
+      </div>
+    </div>`).join('');
+}
+
+function abrirNoticia(i) {
+  const d = _noticias[i]; if (!d) return;
+  setText('modal-cat',   d.fm.categoria || 'Notícias');
+  setText('modal-titulo', d.fm.titulo || '');
+  setText('modal-data',   fmtData(d.fm.data));
+  const img = document.getElementById('modal-img');
+  if (d.fm.foto) { img.src = d.fm.foto; img.alt = d.fm.titulo; img.style.display = 'block'; }
+  else img.style.display = 'none';
+  setHTML('modal-corpo', d.body ? marked.parse(d.body) : `<p>${d.fm.resumo || ''}</p>`);
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function fecharModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
+
+/* ── CRONOGRAMA ── */
+async function carregarCronograma() {
+  const tl = document.getElementById('timeline');
+  const lista = await listarPasta('_eventos');
+  if (!lista.length) {
+    tl.innerHTML = '<p style="font-size:14px;color:var(--cinza)">Nenhum evento cadastrado ainda.</p>';
+    return;
+  }
+  const promises = lista.map(f => fetchMD('/_eventos/' + f));
+  const docs = (await Promise.all(promises)).filter(Boolean);
+  if (!docs.length) {
+    tl.innerHTML = '<p style="font-size:14px;color:var(--cinza)">Nenhum evento cadastrado ainda.</p>';
+    return;
+  }
+  docs.sort((a,b) => (a.fm.data||'').localeCompare(b.fm.data||''));
+  const hoje = new Date().toISOString().split('T')[0];
+  tl.innerHTML = docs.map(d => `
+    <div class="titem ${d.fm.data < hoje ? 'passado' : ''}">
+      <p class="titem-date">${fmtData(d.fm.data)}${d.fm.horario ? ' · ' + d.fm.horario : ''}</p>
+      ${d.fm.tipo ? `<span class="titem-cat">${d.fm.tipo}</span>` : ''}
+      <h3>${d.fm.nome || ''}</h3>
+      <p>${d.fm.local ? d.fm.local + (d.body ? ' — ' : '') : ''}${d.body ? d.body.split('\n')[0].replace(/[#*_]/g,'') : ''}</p>
+    </div>`).join('');
+}
+
+/* ── CONFIG / FOOTER ── */
+async function carregarConfig() {
+  const d = await fetchMD('/_dados/config.md');
+  document.getElementById('ano').textContent = new Date().getFullYear();
+  if (!d) return;
+  const f = d.fm;
+  if (f.slogan) setText('foot-slogan', f.slogan);
+  if (f.email) {
+    const el = document.getElementById('foot-email');
+    el.textContent = f.email; el.href = 'mailto:' + f.email;
+  }
+  if (f.telefone) {
+    const el = document.getElementById('foot-tel');
+    el.textContent = f.telefone;
+    el.href = 'https://wa.me/' + f.telefone.replace(/\D/g,'');
+  }
+  if (f.endereco) setText('foot-end', f.endereco);
+  if (f.instagram) {
+    const el = document.getElementById('foot-ig');
+    el.textContent = f.instagram;
+    el.href = 'https://instagram.com/' + f.instagram.replace('@','');
+  }
+  if (f.facebook) {
+    const el = document.getElementById('foot-fb');
+    el.textContent = f.facebook;
+    el.href = f.facebook.startsWith('http') ? f.facebook : 'https://' + f.facebook;
+  }
+}
+
+/* ── INIT ── */
+async function init() {
+  await Promise.all([
+    carregarHero(),
+    carregarSobre(),
+    carregarMVV(),
+    carregarPresidencia(),
+    carregarProjetos(),
+    carregarNoticias(),
+    carregarCronograma(),
+    carregarConfig(),
+  ]);
+}
+
+init();
+
+/* Netlify Identity — redireciona para o painel após login */
+if (window.netlifyIdentity) {
+  window.netlifyIdentity.on('init', user => {
+    if (!user) window.netlifyIdentity.on('login', () => {
+      document.location.href = '/admin/';
+    });
+  });
+}
+</script>
+</body>
+</html>

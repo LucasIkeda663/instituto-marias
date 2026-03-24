@@ -1,0 +1,121 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: imagens/uploads
+public_folder: /imagens/uploads
+
+locale: pt
+
+collections:
+
+  - name: noticias
+    label: Noticias
+    label_singular: Noticia
+    folder: _noticias
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{titulo}} — {{data}}"
+    fields:
+      - { label: Titulo, name: titulo, widget: string }
+      - { label: Data, name: data, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+      - label: Categoria
+        name: categoria
+        widget: select
+        options: [Noticias, Projetos, Eventos, Parcerias, Premiacoes, Comunicados]
+        default: Noticias
+      - { label: Resumo, name: resumo, widget: text, hint: "Aparece no cartao da noticia. Maximo 2 linhas." }
+      - { label: Foto de destaque, name: foto, widget: image, required: false, hint: "Foto que aparece no cartao e no topo da noticia." }
+      - { label: Texto completo, name: body, widget: markdown }
+
+  - name: eventos
+    label: Cronograma
+    label_singular: Evento
+    folder: _eventos
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{nome}} — {{data}}"
+    fields:
+      - { label: Nome do evento, name: nome, widget: string }
+      - { label: Data, name: data, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+      - { label: Horario, name: horario, widget: string, required: false, hint: "Ex: 14h00" }
+      - { label: Local, name: local, widget: string, required: false }
+      - label: Tipo de atividade
+        name: tipo
+        widget: select
+        options: [Oficina, Reuniao, Atendimento, Curso, Palestra, Evento externo, Outro]
+        default: Oficina
+      - { label: Foto do evento, name: foto, widget: image, required: false }
+      - { label: Descricao, name: body, widget: markdown, required: false }
+
+  - name: paginas
+    label: Paginas do site
+    files:
+
+      - label: Pagina inicial
+        name: hero
+        file: _dados/hero.md
+        fields:
+          - { label: Titulo principal, name: titulo, widget: string, default: "Transformando vidas na periferia" }
+          - { label: Subtitulo, name: subtitulo, widget: text }
+          - { label: Foto de fundo, name: foto, widget: image, required: false }
+          - { label: Mulheres atendidas, name: num_atendidas, widget: string, required: false }
+          - { label: Projetos ativos, name: num_projetos, widget: string, required: false }
+          - { label: Anos de atuacao, name: num_anos, widget: string, required: false }
+
+      - label: Sobre nos
+        name: sobre
+        file: _dados/sobre.md
+        fields:
+          - { label: Titulo da secao, name: titulo, widget: string, default: "Quem somos" }
+          - { label: Foto da secao, name: foto, widget: image, required: false }
+          - { label: Historia do instituto, name: historia, widget: text }
+          - { label: Publico e area de atuacao, name: publico, widget: text }
+
+      - label: Missao Visao e Valores
+        name: missao
+        file: _dados/missao.md
+        fields:
+          - { label: Missao, name: missao, widget: text }
+          - { label: Visao, name: visao, widget: text }
+          - { label: Valores (separados por virgula), name: valores, widget: string }
+
+      - label: Presidencia e Lideranca
+        name: presidencia
+        file: _dados/presidencia.md
+        fields:
+          - { label: Foto da presidenta, name: foto, widget: image, required: false }
+          - { label: Nome da presidenta, name: nome, widget: string }
+          - { label: Cargo, name: cargo, widget: string, default: "Presidenta" }
+          - { label: Biografia, name: bio, widget: text }
+          - { label: Vice-presidencia Nome, name: vice, widget: string, required: false }
+          - { label: Secretaria Nome, name: secretaria, widget: string, required: false }
+          - { label: Tesouraria Nome, name: tesouraria, widget: string, required: false }
+
+      - label: Projetos
+        name: projetos
+        file: _dados/projetos.md
+        fields:
+          - { label: Projeto 1 Foto, name: proj1_foto, widget: image, required: false }
+          - { label: Projeto 1 Nome, name: proj1_nome, widget: string, required: false }
+          - { label: Projeto 1 Categoria, name: proj1_cat, widget: string, required: false }
+          - { label: Projeto 1 Descricao, name: proj1_desc, widget: text, required: false }
+          - { label: Projeto 2 Foto, name: proj2_foto, widget: image, required: false }
+          - { label: Projeto 2 Nome, name: proj2_nome, widget: string, required: false }
+          - { label: Projeto 2 Categoria, name: proj2_cat, widget: string, required: false }
+          - { label: Projeto 2 Descricao, name: proj2_desc, widget: text, required: false }
+          - { label: Projeto 3 Foto, name: proj3_foto, widget: image, required: false }
+          - { label: Projeto 3 Nome, name: proj3_nome, widget: string, required: false }
+          - { label: Projeto 3 Categoria, name: proj3_cat, widget: string, required: false }
+          - { label: Projeto 3 Descricao, name: proj3_desc, widget: text, required: false }
+
+      - label: Configuracoes e Contato
+        name: config
+        file: _dados/config.md
+        fields:
+          - { label: Slogan, name: slogan, widget: string, required: false }
+          - { label: Email de contato, name: email, widget: string, required: false }
+          - { label: Telefone WhatsApp, name: telefone, widget: string, required: false }
+          - { label: Endereco, name: endereco, widget: string, required: false }
+          - { label: Instagram, name: instagram, widget: string, required: false }
+          - { label: Facebook, name: facebook, widget: string, required: false }
