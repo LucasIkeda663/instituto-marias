@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Instituto Marias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --rosa:#c0576e;--rosa-claro:#f5dce2;--vinho:#6b2336;
+  --creme:#faf7f4;--cinza:#5a5a5a;--cinza-claro:#e8e4e0;
+  --texto:#1e1e1e;--branco:#fff;--max:1100px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;color:var(--texto);background:var(--creme);font-size:15px;line-height:1.7}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:600;line-height:1.25}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.w{max-width:var(--max);margin:0 auto;padding:0 2rem}
+
+/* HEADER */
+header{background:var(--vinho);border-bottom:3px solid var(--rosa);position:sticky;top:0;z-index:100}
+.hinner{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:var(--max);margin:0 auto;padding:0 2rem}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-circle{width:40px;height:40px;border-radius:50%;background:var(--rosa-claro);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:16px;color:var(--vinho);font-weight:600;flex-shrink:0}
+.logo-name{color:#fff;font-family:'Playfair Display',serif;font-size:16px}
+nav{display:flex;gap:1.8rem;align-items:center}
+nav a{color:rgba(255,255,255,0.78);font-size:13px;font-weight:500;transition:color .2s}
+nav a:hover{color:var(--rosa-claro)}
+.btn-nav{background:var(--rosa);color:#fff;padding:7px 18px;border-radius:40px;font-size:13px;font-weight:500}
+
+/* HERO */
+.hero{background:var(--vinho);display:grid;grid-template-columns:1fr 1fr;min-height:480px}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:4rem 2.5rem 4rem 2rem}
+.tag{display:inline-block;background:var(--rosa);color:#fff;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:40px;margin-bottom:1.2rem;width:fit-content}
+.hero-left h1{font-size:2.4rem;color:#fff;margin-bottom:1rem}
+.hero-left p{color:rgba(255,255,255,0.7);font-size:15px;max-width:400px;margin-bottom:1.8rem}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn-p{background:var(--rosa);color:#fff;padding:11px 24px;border-radius:40px;font-size:14px;font-weight:500;cursor:pointer}
+.btn-o{border:1.5px solid rgba(255,255,255,0.35);color:rgba(255,255,255,0.82);padding:11px 24px;border-radius:40px;font-size:14px;font-weight:500}
+.hero-right{background:rgba(0,0,0,0.22);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:rgba(255,255,255,0.3);font-size:13px;padding:2rem;position:relative;overflow:hidden}
+.hero-right img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55}
+.hero-right-ph{display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;z-index:1}
+.img-ph{width:80px;height:80px;border-radius:50%;border:2px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center}
+.nums{display:flex;gap:2.5rem;position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:1}
+.num strong{display:block;font-family:'Playfair Display',serif;font-size:1.9rem;color:#fff;text-align:center}
+.num span{font-size:11px;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:0.06em}
+
+/* SEÇÕES */
+section{padding:4.5rem 0}
+.slabel{font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--rosa);font-weight:500;margin-bottom:0.5rem}
+.stitle{font-size:2rem;margin-bottom:1rem}
+.sdesc{color:var(--cinza);max-width:520px;font-size:15px}
+.sheader{margin-bottom:3rem}
+
+/* SOBRE */
+.sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.sobre-img{background:var(--cinza-claro);border-radius:8px;height:320px;display:flex;align-items:center;justify-content:center;color:var(--cinza);font-size:13px;overflow:hidden}
+.sobre-img img{width:100%;height:100%;object-fit:cover}
+.sobre-text p{color:var(--cinza);font-size:15px;margin-bottom:1rem}
+
+/* MVV */
+.mvv{background:var(--vinho)}
+.mvv .stitle,.mvv .slabel{color:#fff}
+.mvv .sdesc{color:rgba(255,255,255,0.65)}
+.mvv-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.mvv-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:2rem}
+.mvv-icon{width:40px;height:40px;border-radius:50%;background:var(--rosa);display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem}
+.mvv-card h3{font-size:1.1rem;color:#fff;margin-bottom:0.6rem}
+.mvv-card p{font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7}
+
+/* PRESIDÊNCIA */
+.pres-grid{display:grid;grid-template-columns:300px 1fr;gap:4rem;align-items:start}
+.pres-card{background:var(--branco);border-radius:8px;border:1px solid var(--cinza-claro);overflow:hidden}
+.pres-foto{background:var(--cinza-claro);height:280px;display:flex;align-items:center;justify-content:center;color:var(--cinza);font-size:13px;border-bottom:3px solid var(--rosa);overflow:hidden}
+.pres-foto img{width:100%;height:100%;object-fit:cover}
+.pres-info{padding:1.5rem}
+.pres-info h3{font-size:1.1rem;margin-bottom:0.2rem}
+.pres-cargo{font-size:12px;color:var(--rosa);font-weight:500;text-transform:uppercase;letter-spacing:0.08em}
+.pres-text p{color:var(--cinza);font-size:15px;margin-bottom:1rem}
+.lider-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:1rem}
+.lider-card{background:var(--branco);border-radius:8px;border:1px solid var(--cinza-claro);padding:1.2rem;display:flex;gap:12px;align-items:center}
+.lider-avatar{width:44px;height:44px;border-radius:50%;background:var(--rosa-claro);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:16px;color:var(--vinho);flex-shrink:0}
+.lider-card h4{font-size:13px;font-weight:500;margin-bottom:2px}
+.lider-card span{font-size:11px;color:var(--cinza)}
+
+/* PROJETOS */
+.proj{background:var(--branco)}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.proj-card{border-radius:8px;border:1px solid var(--cinza-claro);overflow:hidden}
+.proj-img{background:var(--rosa-claro);height:160px;display:flex;align-items:center;justify-content:center;color:var(--rosa);font-size:12px;border-bottom:3px solid var(--rosa)}
+.proj-body{padding:1.2rem}
+.proj-tag{display:inline-block;background:var(--rosa-claro);color:var(--vinho);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;padding:3px 10px;border-radius:40px;margin-bottom:0.6rem}
+.proj-body h3{font-size:1rem;margin-bottom:0.5rem}
+.proj-body p{font-size:13px;color:var(--cinza)}
+
+/* NOTÍCIAS */
+.noticias-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.noticia{border-radius:8px;background:var(--branco);border:1px solid var(--cinza-claro);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.noticia:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(107,35,54,0.1)}
+.noticia-img{background:var(--cinza-claro);height:140px;display:flex;align-items:center;justify-content:center;color:var(--cinza);font-size:12px;overflow:hidden}
+.noticia-img img{width:100%;height:100%;object-fit:cover}
+.noticia-body{padding:1.2rem}
+.noticia-data{font-size:11px;color:var(--rosa);font-weight:500;margin-bottom:0.4rem}
+.noticia-body h3{font-size:0.95rem;margin-bottom:0.5rem;line-height:1.35}
+.noticia-body p{font-size:13px;color:var(--cinza)}
+.empty-msg{text-align:center;padding:2.5rem;color:var(--cinza);font-size:14px;background:var(--branco);border-radius:8px;border:1px solid var(--cinza-claro);grid-column:1/-1}
+
+/* MODAL NOTÍCIA */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;align-items:center;justify-content:center;padding:2rem}
+.modal-overlay.open{display:flex}
+.modal{background:var(--branco);border-radius:12px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:2.5rem;position:relative}
+.modal-close{position:absolute;top:1rem;right:1rem;background:var(--creme);border:none;border-radius:50%;width:32px;height:32px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--cinza)}
+.modal-close:hover{background:var(--cinza-claro)}
+.modal-cat{font-size:11px;color:var(--rosa);font-weight:500;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem}
+.modal h2{font-size:1.6rem;margin-bottom:0.5rem;color:var(--vinho)}
+.modal-data{font-size:12px;color:var(--cinza);margin-bottom:1.5rem}
+.modal-corpo{font-size:15px;color:var(--cinza);line-height:1.8}
+.modal-corpo p{margin-bottom:1rem}
+
+/* CRONOGRAMA */
+.crono{background:var(--creme)}
+.timeline{position:relative;padding-left:2rem;margin-top:1.5rem}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--rosa-claro)}
+.titem{position:relative;margin-bottom:2.2rem;padding-left:1.5rem}
+.titem::before{content:'';position:absolute;left:-2.45rem;top:6px;width:14px;height:14px;border-radius:50%;background:var(--rosa);border:3px solid var(--creme)}
+.titem.passado::before{background:var(--cinza-claro)}
+.titem.passado{opacity:0.55}
+.titem-date{font-size:11px;color:var(--rosa);font-weight:500;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.3rem}
+.titem h3{font-size:0.95rem;margin-bottom:0.3rem}
+.titem p{font-size:13px;color:var(--cinza)}
+.titem-cat{display:inline-block;background:var(--rosa-claro);color:var(--vinho);font-size:10px;padding:2px 8px;border-radius:40px;font-weight:500;margin-bottom:0.3rem}
+.crono-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.crono-cta{background:var(--vinho);border-radius:8px;padding:2.5rem;display:flex;flex-direction:column;justify-content:center}
+
+/* FOOTER */
+footer{background:var(--vinho);padding:3rem 0}
+.foot-inner{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3rem;max-width:var(--max);margin:0 auto;padding:0 2rem}
+.foot-brand p{color:rgba(255,255,255,0.55);font-size:13px;margin-top:0.8rem;max-width:220px}
+.foot-col h4{color:#fff;font-size:13px;font-weight:500;margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.06em}
+.foot-col ul{list-style:none}
+.foot-col li{margin-bottom:0.5rem}
+.foot-col a{color:rgba(255,255,255,0.55);font-size:13px;transition:color .2s}
+.foot-col a:hover{color:var(--rosa-claro)}
+.foot-bar{border-top:1px solid rgba(255,255,255,0.1);margin-top:2.5rem;padding-top:1.5rem;text-align:center;color:rgba(255,255,255,0.35);font-size:12px;max-width:var(--max);margin-left:auto;margin-right:auto;padding-left:2rem;padding-right:2rem}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="hinner">
+    <div class="logo">
+      <div class="logo-circle">IM</div>
+      <span class="logo-name">Instituto Marias</span>
+    </div>
+    <nav>
+      <a href="#sobre">Sobre</a>
+      <a href="#mvv">Missão</a>
+      <a href="#presidencia">Liderança</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#noticias">Notícias</a>
+      <a href="#cronograma">Agenda</a>
+      <a href="#contato" class="btn-nav">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="tag">Instituto Marias</div>
+    <h1 id="hero-titulo">Transformando vidas na periferia</h1>
+    <p id="hero-desc">Assistência social, empoderamento e oportunidades para mulheres periféricas e suas comunidades.</p>
+    <div class="btns">
+      <a href="#projetos" class="btn-p">Conheça nossos projetos</a>
+      <a href="#sobre" class="btn-o">Saiba mais</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-ph" id="hero-ph">
+      <div class="img-ph">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <path d="M21 15l-5-5L5 21"/>
+        </svg>
+      </div>
+      <span>Imagem principal do instituto</span>
+    </div>
+    <div class="nums">
+      <div class="num"><strong id="num-atendidas">—</strong><span>Mulheres atendidas</span></div>
+      <div class="num"><strong id="num-projetos">—</strong><span>Projetos ativos</span></div>
+      <div class="num"><strong id="num-anos">—</strong><span>Anos de atuação</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="w">
+    <div class="sobre-grid">
+      <div class="sobre-img" id="sobre-img-wrap">
+        <span id="sobre-img-ph">📸 Foto do instituto / equipe</span>
+      </div>
+      <div class="sobre-text">
+        <div class="sheader">
+          <p class="slabel">Sobre nós</p>
+          <h2 class="stitle" id="sobre-titulo">Quem somos</h2>
+          <p class="sdesc" id="sobre-desc">Um breve parágrafo sobre a história e origem do Instituto Marias.</p>
+        </div>
+        <p id="sobre-historia">[ Insira a história do instituto no painel de administração. ]</p>
+        <p id="sobre-publico">[ Destaque o público atendido e a área de atuação geográfica. ]</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSÃO VISÃO VALORES -->
+<section id="mvv" class="mvv">
+  <div class="w">
+    <div class="sheader">
+      <p class="slabel">Nossa essência</p>
+      <h2 class="stitle">Missão, visão e valores</h2>
+      <p class="sdesc">Os princípios que guiam cada ação do Instituto Marias.</p>
+    </div>
+    <div class="mvv-cards">
+      <div class="mvv-card">
+        <div class="mvv-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3>Missão</h3>
+        <p id="mvv-missao">[ Edite no painel de administração → Páginas → Missão, Visão e Valores ]</p>
+      </div>
+      <div class="mvv-card">
+        <div class="mvv-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <h3>Visão</h3>
+        <p id="mvv-visao">[ Edite no painel de administração → Páginas → Missão, Visão e Valores ]</p>
+      </div>
+      <div class="mvv-card">
+        <div class="mvv-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <h3>Valores</h3>
+        <p id="mvv-valores">[ Edite no painel de administração → Páginas → Missão, Visão e Valores ]</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESIDÊNCIA -->
+<section id="presidencia">
+  <div class="w">
+    <div class="sheader">
+      <p class="slabel">Liderança</p>
+      <h2 class="stitle">Presidência e equipe diretiva</h2>
+      <p class="sdesc">Conheça as pessoas que lideram o Instituto Marias.</p>
+    </div>
+    <div class="pres-grid">
+      <div class="pres-card">
+        <div class="pres-foto" id="pres-foto-wrap">
+          <span id="pres-foto-ph">📸 Foto da presidente</span>
+        </div>
+        <div class="pres-info">
+          <h3 id="pres-nome">[ Nome da Presidente ]</h3>
+          <span class="pres-cargo" id="pres-cargo">Presidenta</span>
+        </div>
+      </div>
+      <div class="pres-text">
+        <p id="pres-bio">[ Edite a biografia no painel de administração → Páginas → Presidência e Liderança ]</p>
+        <p style="font-size:14px;color:var(--cinza);margin-top:2rem;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;">Outras lideranças</p>
+        <div class="lider-grid">
+          <div class="lider-card">
+            <div class="lider-avatar" id="lider-vice-av">—</div>
+            <div><h4 id="lider-vice">[ Nome ]</h4><span>Vice-presidência</span></div>
+          </div>
+          <div class="lider-card">
+            <div class="lider-avatar" id="lider-sec-av">—</div>
+            <div><h4 id="lider-sec">[ Nome ]</h4><span>Secretaria</span></div>
+          </div>
+          <div class="lider-card">
+            <div class="lider-avatar" id="lider-tes-av">—</div>
+            <div><h4 id="lider-tes">[ Nome ]</h4><span>Tesouraria</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETOS -->
+<section id="projetos" class="proj">
+  <div class="w">
+    <div class="sheader">
+      <p class="slabel">O que fazemos</p>
+      <h2 class="stitle">Nossos projetos</h2>
+      <p class="sdesc">Iniciativas e programas em andamento pelo Instituto Marias.</p>
+    </div>
+    <div class="proj-grid" id="projetos-grid">
+      <!-- preenchido via JS -->
+    </div>
+  </div>
+</section>
+
+<!-- NOTÍCIAS -->
+<section id="noticias">
+  <div class="w">
+    <div class="sheader">
+      <p class="slabel">Novidades</p>
+      <h2 class="stitle">Últimas notícias</h2>
+      <p class="sdesc">Acompanhe as ações e conquistas do Instituto Marias.</p>
+    </div>
+    <div class="noticias-grid" id="noticias-grid">
+      <!-- preenchido via JS -->
+    </div>
+  </div>
+</section>
+
+<!-- MODAL NOTÍCIA -->
+<div class="modal-overlay" id="modal-overlay" onclick="fecharModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="fecharModal()">✕</button>
+    <p class="modal-cat" id="modal-cat"></p>
+    <h2 id="modal-titulo"></h2>
+    <p class="modal-data" id="modal-data"></p>
+    <div class="modal-corpo" id="modal-corpo"></div>
+  </div>
+</div>
+
+<!-- CRONOGRAMA -->
+<section id="cronograma" class="crono">
+  <div class="w">
+    <div class="crono-grid">
+      <div>
+        <div class="sheader">
+          <p class="slabel">Agenda</p>
+          <h2 class="stitle">Cronograma de atividades</h2>
+          <p class="sdesc">Próximos eventos, oficinas e ações do instituto.</p>
+        </div>
+        <div class="timeline" id="timeline">
+          <!-- preenchido via JS -->
+        </div>
+      </div>
+      <div class="crono-cta">
+        <p class="slabel" style="color:var(--rosa-claro)">Faça parte</p>
+        <h2 class="stitle" style="color:#fff;font-size:1.6rem">Apoie o Instituto Marias</h2>
+        <p style="color:rgba(255,255,255,0.65);font-size:14px;margin-bottom:1.8rem" id="cta-texto">
+          [ Chamada para doação, voluntariado ou parceria institucional. ]
+        </p>
+        <a href="#contato" class="btn-p" style="width:fit-content">Entre em contato</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contato">
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <div class="logo">
+        <div class="logo-circle" style="width:36px;height:36px;font-size:14px">IM</div>
+        <span class="logo-name">Instituto Marias</span>
+      </div>
+      <p id="foot-slogan">[ Slogan ou frase de impacto do instituto. ]</p>
+    </div>
+    <div class="foot-col">
+      <h4>Navegação</h4>
+      <ul>
+        <li><a href="#sobre">Sobre nós</a></li>
+        <li><a href="#mvv">Missão e valores</a></li>
+        <li><a href="#presidencia">Liderança</a></li>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#noticias">Notícias</a></li>
+        <li><a href="#cronograma">Agenda</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a id="foot-email" href="#">[ E-mail do instituto ]</a></li>
+        <li><a id="foot-tel" href="#">[ Telefone / WhatsApp ]</a></li>
+        <li><a id="foot-end" href="#">[ Endereço ]</a></li>
+        <li style="margin-top:1rem"><a id="foot-ig" href="#">Instagram</a></li>
+        <li><a id="foot-fb" href="#">Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bar">
+    © <span id="ano"></span> Instituto Marias · Todos os direitos reservados
+  </div>
+</footer>
+
+<script>
+/* ── CHAVE COMPARTILHADA COM O PAINEL ── */
+const DATA_KEY = 'im_data';
+
+function getData() {
+  try {
+    const raw = localStorage.getItem(DATA_KEY);
+    return raw ? JSON.parse(raw) : { noticias:[], eventos:[], fotos:[], paginas:{}, config:{} };
+  } catch(e) {
+    return { noticias:[], eventos:[], fotos:[], paginas:{}, config:{} };
+  }
+}
+
+function fmtData(iso) {
+  if (!iso) return '';
+  return new Date(iso + 'T12:00:00').toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
+}
+function iniciais(nome) {
+  if (!nome || nome.startsWith('[')) return '—';
+  return nome.trim().split(' ').filter(Boolean).slice(0,2).map(p=>p[0].toUpperCase()).join('');
+}
+function setText(id, val, fallback) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = (val && val.trim() && !val.startsWith('[')) ? val : fallback;
+}
+
+/* ── CONFIGURAÇÕES / CONTATO ── */
+function carregarConfig() {
+  const cfg = getData().config || {};
+  document.getElementById('ano').textContent = new Date().getFullYear();
+  if (cfg.email) { const e = document.getElementById('foot-email'); e.textContent = cfg.email; e.href = 'mailto:'+cfg.email; }
+  if (cfg.tel)   { const t = document.getElementById('foot-tel'); t.textContent = cfg.tel; t.href = 'https://wa.me/'+cfg.tel.replace(/\D/g,''); }
+  if (cfg.end)   document.getElementById('foot-end').textContent = cfg.end;
+  if (cfg.ig)    { const i = document.getElementById('foot-ig'); i.textContent = cfg.ig; i.href = 'https://instagram.com/'+cfg.ig.replace('@',''); }
+  if (cfg.fb)    { const f = document.getElementById('foot-fb'); f.textContent = cfg.fb; f.href = 'https://'+cfg.fb.replace('https://',''); }
+}
+
+/* ── PÁGINAS ESTÁTICAS ── */
+function carregarPaginas() {
+  const { paginas } = getData();
+
+  /* SOBRE */
+  const s = paginas.sobre || {};
+  setText('sobre-titulo',   s['p-sobre-titulo'],   'Quem somos');
+  setText('sobre-historia', s['p-sobre-historia'], '[ Insira a história do instituto no painel de administração. ]');
+  setText('sobre-publico',  s['p-sobre-publico'],  '[ Destaque o público atendido e a área de atuação geográfica. ]');
+  setText('sobre-desc',     s['p-sobre-titulo'],   'Um breve parágrafo sobre a história e origem do Instituto Marias.');
+
+  /* MVV */
+  const m = paginas.missao || {};
+  setText('mvv-missao',  m['p-missao'],  '[ Edite no painel de administração → Páginas → Missão, Visão e Valores ]');
+  setText('mvv-visao',   m['p-visao'],   '[ Edite no painel de administração → Páginas → Missão, Visão e Valores ]');
+  setText('mvv-valores', m['p-valores'], '[ Edite no painel de administração → Páginas → Missão, Visão e Valores ]');
+
+  /* PRESIDÊNCIA */
+  const pr = paginas.presidencia || {};
+  setText('pres-nome',  pr['p-pres-nome'],  '[ Nome da Presidente ]');
+  setText('pres-cargo', pr['p-pres-cargo'], 'Presidenta');
+  setText('pres-bio',   pr['p-pres-bio'],   '[ Edite a biografia no painel de administração. ]');
+  setText('lider-vice', pr['p-vice'], '[ Nome ]');
+  setText('lider-sec',  pr['p-sec'],  '[ Nome ]');
+  setText('lider-tes',  pr['p-tes'],  '[ Nome ]');
+  document.getElementById('lider-vice-av').textContent = iniciais(pr['p-vice']);
+  document.getElementById('lider-sec-av').textContent  = iniciais(pr['p-sec']);
+  document.getElementById('lider-tes-av').textContent  = iniciais(pr['p-tes']);
+
+  /* PROJETOS */
+  const pj = paginas.projetos || {};
+  const projGrid = document.getElementById('projetos-grid');
+  const projs = [
+    { nome: pj['p-proj1-nome'], cat: pj['p-proj1-cat'], desc: pj['p-proj1-desc'] },
+    { nome: pj['p-proj2-nome'], cat: pj['p-proj2-cat'], desc: pj['p-proj2-desc'] },
+    { nome: pj['p-proj3-nome'], cat: pj['p-proj3-cat'], desc: pj['p-proj3-desc'] },
+  ].filter(p => p.nome && p.nome.trim());
+
+  if (projs.length) {
+    projGrid.innerHTML = projs.map(p => `
+      <div class="proj-card">
+        <div class="proj-img">📸 Imagem do projeto</div>
+        <div class="proj-body">
+          <span class="proj-tag">${p.cat || 'Projeto'}</span>
+          <h3>${p.nome}</h3>
+          <p>${p.desc || ''}</p>
+        </div>
+      </div>`).join('');
+  } else {
+    projGrid.innerHTML = `
+      <div class="proj-card"><div class="proj-img">📸</div><div class="proj-body"><span class="proj-tag">Capacitação</span><h3>[ Projeto 1 ]</h3><p>[ Edite no painel → Páginas → Projetos ]</p></div></div>
+      <div class="proj-card"><div class="proj-img">📸</div><div class="proj-body"><span class="proj-tag">Assistência Social</span><h3>[ Projeto 2 ]</h3><p>[ Edite no painel → Páginas → Projetos ]</p></div></div>
+      <div class="proj-card"><div class="proj-img">📸</div><div class="proj-body"><span class="proj-tag">Saúde</span><h3>[ Projeto 3 ]</h3><p>[ Edite no painel → Páginas → Projetos ]</p></div></div>`;
+  }
+}
+
+/* ── NOTÍCIAS ── */
+function carregarNoticias() {
+  const { noticias } = getData();
+  const pub = noticias.filter(n => n.status === 'publicada').slice(-6).reverse();
+  const grid = document.getElementById('noticias-grid');
+  if (!pub.length) {
+    grid.innerHTML = '<div class="empty-msg">Nenhuma notícia publicada ainda. As notícias publicadas no painel de administração aparecerão aqui.</div>';
+    return;
+  }
+  grid.innerHTML = pub.map((n, i) => `
+    <div class="noticia" onclick="abrirNoticia(${noticias.indexOf(n)})">
+      <div class="noticia-img">
+        ${n.imagem && n.imagem.startsWith('http')
+          ? `<img src="${n.imagem}" alt="${n.titulo}" loading="lazy"/>`
+          : `<span style="font-size:12px;padding:1rem;text-align:center;color:var(--cinza)">${n.imagem || '📸 Foto da notícia'}</span>`}
+      </div>
+      <div class="noticia-body">
+        <p class="noticia-data">${fmtData(n.data)} · ${n.categoria}</p>
+        <h3>${n.titulo}</h3>
+        <p>${n.resumo || ''}</p>
+      </div>
+    </div>`).join('');
+}
+
+function abrirNoticia(i) {
+  const n = getData().noticias[i];
+  if (!n) return;
+  document.getElementById('modal-cat').textContent    = n.categoria;
+  document.getElementById('modal-titulo').textContent = n.titulo;
+  document.getElementById('modal-data').textContent   = fmtData(n.data);
+  const corpo = document.getElementById('modal-corpo');
+  corpo.innerHTML = n.texto || `<p>${n.resumo || ''}</p>`;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function fecharModal(e) {
+  if (e && e.target !== document.getElementById('modal-overlay') && !e.target.classList.contains('modal-close')) return;
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal({target: document.getElementById('modal-overlay')}); });
+
+/* ── CRONOGRAMA ── */
+function carregarCronograma() {
+  const { eventos } = getData();
+  const tl = document.getElementById('timeline');
+  const hoje = new Date().toISOString().split('T')[0];
+  if (!eventos.length) {
+    tl.innerHTML = '<p style="font-size:14px;color:var(--cinza)">Nenhum evento cadastrado. Os eventos adicionados no painel de administração aparecerão aqui.</p>';
+    return;
+  }
+  tl.innerHTML = eventos.map(e => `
+    <div class="titem ${e.data < hoje ? 'passado' : ''}">
+      <p class="titem-date">${fmtData(e.data)}${e.hora ? ' · ' + e.hora : ''}</p>
+      <span class="titem-cat">${e.cat}</span>
+      <h3>${e.nome}</h3>
+      <p>${e.local ? e.local + (e.desc ? ' — ' : '') : ''}${e.desc || ''}</p>
+    </div>`).join('');
+}
+
+/* ── INIT ── */
+function init() {
+  carregarConfig();
+  carregarPaginas();
+  carregarNoticias();
+  carregarCronograma();
+}
+
+init();
+
+/* Recarrega se outra aba (painel) salvar dados */
+window.addEventListener('storage', e => { if (e.key === DATA_KEY) init(); });
+</script>
+</body>
+</html>

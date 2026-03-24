@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Instituto Marias — Administração</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--rosa:#c0576e;--rosa-h:#a8455a;--rosa-claro:#fdf0f3;--vinho:#6b2336;--creme:#faf7f4;--cinza:#5a5a5a;--borda:#e0d9d5;--branco:#fff;--texto:#1e1e1e;--success:#2d7a4f;--danger:#a32d2d;--danger-bg:#fdf0f0}
+html,body{height:100%}
+body{font-family:'DM Sans',sans-serif;background:var(--creme);color:var(--texto);font-size:14px}
+h1,h2,h3{font-family:'Playfair Display',serif}
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;background:var(--creme)}
+.login-card{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:2.5rem;width:100%;max-width:380px}
+.login-logo{display:flex;align-items:center;gap:10px;margin-bottom:1.8rem;justify-content:center}
+.lc{width:46px;height:46px;border-radius:50%;background:var(--rosa-claro);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:17px;color:var(--vinho);font-weight:600}
+.ln{font-family:'Playfair Display',serif;font-size:18px;color:var(--vinho)}
+.login-card h2{font-size:1.25rem;margin-bottom:.4rem;text-align:center}
+.login-card>p{font-size:13px;color:var(--cinza);text-align:center;margin-bottom:1.8rem}
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:11px;font-weight:500;color:var(--cinza);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em}
+.field input{width:100%;padding:11px 13px;border:1px solid var(--borda);border-radius:7px;font-size:14px;font-family:'DM Sans',sans-serif;background:var(--branco);color:var(--texto)}
+.field input:focus{outline:none;border-color:var(--rosa)}
+.btn-login{width:100%;background:var(--vinho);color:#fff;border:none;padding:12px;border-radius:7px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:.5rem}
+.btn-login:hover{background:var(--rosa)}
+.login-err{display:none;background:var(--danger-bg);color:var(--danger);font-size:12px;padding:9px 13px;border-radius:7px;margin-top:.8rem;text-align:center}
+.login-hint{font-size:11px;color:#bbb;text-align:center;margin-top:1.2rem}
+#app{display:none;height:100vh;flex-direction:column}
+.topbar{background:var(--vinho);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:58px;flex-shrink:0}
+.tbl{display:flex;align-items:center;gap:10px}
+.tc{width:36px;height:36px;border-radius:50%;background:var(--rosa-claro);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:14px;color:var(--vinho);font-weight:600}
+.tn{font-family:'Playfair Display',serif;font-size:15px;color:#fff}
+.tt{font-size:11px;color:rgba(255,255,255,.5);background:rgba(255,255,255,.1);padding:3px 10px;border-radius:40px;margin-left:4px}
+.tbr{display:flex;align-items:center;gap:12px}
+.tu{font-size:12px;color:rgba(255,255,255,.55)}
+.btn-logout{background:rgba(255,255,255,.12);color:rgba(255,255,255,.8);border:none;padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-logout:hover{background:rgba(255,255,255,.22)}
+.body-layout{display:flex;flex:1;overflow:hidden}
+.sidebar{background:var(--branco);border-right:1px solid var(--borda);padding:1.2rem 0;width:210px;flex-shrink:0;overflow-y:auto}
+.ns{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#bbb;padding:0 1.2rem;margin:1rem 0 .4rem}
+.ni{display:flex;align-items:center;gap:9px;padding:9px 1.2rem;cursor:pointer;font-size:13px;color:var(--cinza);transition:all .15s;border-left:3px solid transparent;user-select:none}
+.ni:hover{background:var(--creme);color:var(--texto)}
+.ni.active{background:var(--rosa-claro);color:var(--rosa);border-left-color:var(--rosa);font-weight:500}
+.ni svg{width:15px;height:15px;flex-shrink:0;opacity:.65}
+.ni.active svg{opacity:1}
+.main{flex:1;overflow-y:auto;padding:1.8rem;background:var(--creme)}
+.panel{display:none}
+.panel.active{display:block}
+.btn-p{background:var(--rosa);color:#fff;border:none;padding:9px 18px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-p:hover{background:var(--rosa-h)}
+.btn-s{background:var(--branco);color:var(--cinza);border:1px solid var(--borda);padding:9px 18px;border-radius:7px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-s:hover{background:var(--creme)}
+.btn-d{background:var(--danger-bg);color:var(--danger);border:1px solid #f7c1c1;padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-d:hover{background:#f9dada}
+.btn-sm{padding:5px 10px;font-size:12px}
+.btn-e{background:var(--rosa-claro);color:var(--vinho);border:1px solid #f0c8d0;padding:5px 10px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-e:hover{background:#f9e0e6}
+.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.pt{font-size:1.4rem;color:var(--vinho)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.8rem}
+.stat{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:1rem 1.2rem}
+.stat-n{font-family:'Playfair Display',serif;font-size:2rem;color:var(--vinho);line-height:1}
+.stat-l{font-size:11px;color:var(--cinza);margin-top:4px;text-transform:uppercase;letter-spacing:.06em}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.card{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:1.3rem}
+.card h3{font-size:.95rem;margin-bottom:.9rem;color:var(--vinho)}
+.ri{display:flex;align-items:center;padding:7px 0;border-bottom:1px solid var(--borda);font-size:13px;gap:8px}
+.ri:last-child{border-bottom:none}
+.fc{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:1.5rem;margin-bottom:1.2rem}
+.fc h3{font-size:.95rem;color:var(--vinho);margin-bottom:1.2rem;padding-bottom:.6rem;border-bottom:1px solid var(--borda)}
+.fr{display:grid;gap:1rem;margin-bottom:1rem}
+.fr.c2{grid-template-columns:1fr 1fr}
+.fr.c3{grid-template-columns:1fr 1fr 1fr}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--cinza)}
+.fg input,.fg select,.fg textarea{padding:9px 12px;border:1px solid var(--borda);border-radius:7px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--texto);background:var(--branco);width:100%}
+.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--rosa)}
+.fg textarea{resize:vertical;min-height:100px;line-height:1.65}
+.fa{display:flex;gap:10px;margin-top:1.2rem;flex-wrap:wrap}
+
+/* FOTO UPLOAD */
+.fub{border:2px dashed var(--borda);border-radius:8px;padding:1.2rem;display:flex;align-items:center;gap:1rem;cursor:pointer;transition:all .2s;background:var(--creme)}
+.fub:hover{border-color:var(--rosa);background:var(--rosa-claro)}
+.fub input[type=file]{display:none}
+.fp{width:80px;height:80px;border-radius:6px;object-fit:cover;border:1px solid var(--borda);flex-shrink:0}
+.fph{width:80px;height:80px;border-radius:6px;border:1px dashed var(--borda);flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--creme)}
+.fui{flex:1}
+.fui strong{display:block;font-size:13px;color:var(--texto);margin-bottom:3px}
+.fui span{font-size:12px;color:var(--cinza)}
+.fna{font-size:11px;color:var(--rosa);margin-top:4px;font-weight:500}
+.fua{display:flex;gap:6px;margin-top:8px}
+
+/* TABELA */
+.tw{background:var(--branco);border:1px solid var(--borda);border-radius:10px;overflow:hidden;margin-bottom:1.2rem}
+.lt{width:100%;border-collapse:collapse}
+.lt th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--cinza);padding:10px 14px;background:var(--creme);border-bottom:1px solid var(--borda)}
+.lt td{padding:11px 14px;border-bottom:1px solid var(--borda);font-size:13px;vertical-align:middle}
+.lt tr:last-child td{border-bottom:none}
+.lt tr:hover td{background:#fdf8f6}
+.tda{display:flex;gap:6px}
+.th{width:44px;height:44px;border-radius:6px;object-fit:cover;border:1px solid var(--borda);background:var(--creme);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.th img{width:44px;height:44px;border-radius:6px;object-fit:cover}
+.badge{display:inline-block;font-size:10px;padding:3px 9px;border-radius:40px;font-weight:500}
+.bp{background:#eaf4ee;color:#2d7a4f}
+.bd{background:var(--creme);color:#888;border:1px solid var(--borda)}
+.bc{background:var(--rosa-claro);color:var(--vinho)}
+
+/* EDITOR */
+.et{display:flex;gap:4px;padding:7px 9px;background:var(--creme);border:1px solid var(--borda);border-bottom:none;border-radius:7px 7px 0 0;flex-wrap:wrap}
+.et button{background:none;border:1px solid transparent;padding:4px 9px;border-radius:5px;cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;color:var(--cinza)}
+.et button:hover{background:var(--branco);border-color:var(--borda);color:var(--texto)}
+.eb{border:1px solid var(--borda);border-radius:0 0 7px 7px;min-height:160px;padding:11px 13px;font-size:13px;line-height:1.75;outline:none;background:var(--branco)}
+.eb:focus{border-color:var(--rosa)}
+
+/* GALERIA */
+.gg{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-top:1rem}
+.gi{border-radius:8px;aspect-ratio:1;overflow:hidden;position:relative;border:1px solid var(--borda)}
+.gi img{width:100%;height:100%;object-fit:cover;display:block}
+.gi .gd{position:absolute;top:4px;right:4px;background:rgba(163,45,45,.88);color:#fff;border:none;border-radius:4px;padding:3px 7px;font-size:10px;cursor:pointer;display:none}
+.gi:hover .gd{display:block}
+.gi .gn{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.45);color:#fff;font-size:10px;padding:4px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ga{background:var(--creme);border:2px dashed var(--borda);border-radius:8px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;cursor:pointer;font-size:12px;color:var(--cinza)}
+.ga:hover{border-color:var(--rosa);color:var(--rosa);background:var(--rosa-claro)}
+
+/* PÁGINAS */
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.pcard{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:1.3rem;cursor:pointer;transition:border-color .2s}
+.pcard:hover{border-color:var(--rosa)}
+.pcard h3{font-size:.95rem;margin-bottom:.4rem;color:var(--vinho)}
+.pcard p{font-size:12px;color:var(--cinza);margin-bottom:.9rem}
+.es{text-align:center;padding:2.5rem 1rem;color:var(--cinza)}
+.es p{font-size:13px}
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;color:#fff;padding:12px 20px;border-radius:8px;font-size:13px;font-weight:500;z-index:9999;display:none;pointer-events:none}
+@media(max-width:700px){.stats,.rg,.fr.c2,.fr.c3,.pg{grid-template-columns:1fr}.sidebar{width:180px}}
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo"><div class="lc">IM</div><span class="ln">Instituto Marias</span></div>
+    <h2>Área administrativa</h2>
+    <p>Entre com suas credenciais para acessar o painel</p>
+    <div class="field"><label>Usuário</label><input type="text" id="lu" placeholder="admin" autocomplete="username"/></div>
+    <div class="field"><label>Senha</label><input type="password" id="lp" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    <button class="btn-login" onclick="doLogin()">Entrar no painel</button>
+    <div class="login-err" id="lerr">Usuário ou senha incorretos.</div>
+    <p class="login-hint">Padrão: admin / marias2025 — troque nas Configurações.</p>
+  </div>
+</div>
+
+<div id="app">
+  <div class="topbar">
+    <div class="tbl"><div class="tc">IM</div><span class="tn">Instituto Marias</span><span class="tt">Administração</span></div>
+    <div class="tbr"><span class="tu" id="tbu"></span><button class="btn-logout" onclick="doLogout()">Sair</button></div>
+  </div>
+  <div class="body-layout">
+    <nav class="sidebar">
+      <p class="ns">Geral</p>
+      <div class="ni active" onclick="showPanel('dashboard',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>Painel
+      </div>
+      <p class="ns">Conteúdo</p>
+      <div class="ni" onclick="showPanel('noticias',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="12" rx="1.5"/><line x1="4" y1="6" x2="12" y2="6"/><line x1="4" y1="9.5" x2="9" y2="9.5"/></svg>Notícias
+      </div>
+      <div class="ni" onclick="showPanel('cronograma',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="12" rx="1.5"/><line x1="5" y1="1" x2="5" y2="5"/><line x1="11" y1="1" x2="11" y2="5"/><line x1="1" y1="7" x2="15" y2="7"/></svg>Cronograma
+      </div>
+      <div class="ni" onclick="showPanel('galeria',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="10" rx="1.5"/><circle cx="8" cy="8" r="2.2"/><path d="M5 3l1.5-2h3L11 3"/></svg>Galeria
+      </div>
+      <div class="ni" onclick="showPanel('paginas',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 1H3a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6L9 1z"/><path d="M9 1v5h5"/><line x1="4" y1="9" x2="10" y2="9"/><line x1="4" y1="12" x2="8" y2="12"/></svg>Páginas
+      </div>
+      <p class="ns">Sistema</p>
+      <div class="ni" onclick="showPanel('config',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.5"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.1 3.1l1.4 1.4M11.5 11.5l1.4 1.4M3.1 12.9l1.4-1.4M11.5 4.5l1.4-1.4"/></svg>Configurações
+      </div>
+    </nav>
+
+    <main class="main">
+
+      <!-- DASHBOARD -->
+      <div class="panel active" id="panel-dashboard">
+        <div class="ph"><h2 class="pt">Painel geral</h2><span style="font-size:12px;color:var(--cinza)" id="dash-date"></span></div>
+        <div class="stats">
+          <div class="stat"><div class="stat-n" id="st-n">0</div><div class="stat-l">Notícias publicadas</div></div>
+          <div class="stat"><div class="stat-n" id="st-e">0</div><div class="stat-l">Eventos cadastrados</div></div>
+          <div class="stat"><div class="stat-n" id="st-f">0</div><div class="stat-l">Fotos na galeria</div></div>
+          <div class="stat"><div class="stat-n" id="st-r">0</div><div class="stat-l">Rascunhos</div></div>
+        </div>
+        <div class="rg">
+          <div class="card"><h3>Últimas notícias</h3><div id="dn-list"><div class="es"><p>Nenhuma ainda</p></div></div></div>
+          <div class="card"><h3>Próximos eventos</h3><div id="de-list"><div class="es"><p>Nenhum ainda</p></div></div></div>
+        </div>
+      </div>
+
+      <!-- NOTÍCIAS -->
+      <div class="panel" id="panel-noticias">
+        <div id="n-list-v">
+          <div class="ph"><h2 class="pt">Notícias</h2><button class="btn-p" onclick="abrirN()">+ Nova notícia</button></div>
+          <div class="tw"><table class="lt">
+            <thead><tr><th style="width:52px">Foto</th><th>Título</th><th>Categoria</th><th>Data</th><th>Status</th><th>Ações</th></tr></thead>
+            <tbody id="n-tbody"><tr><td colspan="6"><div class="es"><p>Nenhuma notícia ainda</p></div></td></tr></tbody>
+          </table></div>
+        </div>
+        <div id="n-form-v" style="display:none">
+          <div class="ph"><h2 class="pt" id="n-form-title">Nova notícia</h2><button class="btn-s" onclick="fecharN()">← Voltar</button></div>
+          <div class="fc">
+            <h3>Foto de destaque</h3>
+            <div class="fub" onclick="document.getElementById('nfi').click()">
+              <input type="file" id="nfi" accept="image/*" onchange="handleFoto(this,'nfp','nfn','nfa','nfd')"/>
+              <div id="nfp" class="fph"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+              <div class="fui">
+                <strong>Foto de destaque da notícia</strong>
+                <span>Clique para selecionar uma imagem</span>
+                <div class="fna" id="nfn"></div>
+                <div class="fua" id="nfa" style="display:none"><button class="btn-d btn-sm" onclick="remFoto(event,'nfi','nfp','nfn','nfa','nfd')">Remover foto</button></div>
+              </div>
+            </div>
+            <input type="hidden" id="nfd"/>
+          </div>
+          <div class="fc">
+            <h3>Informações</h3>
+            <div class="fr"><div class="fg"><label>Título</label><input id="n-t" placeholder="Título da notícia"/></div></div>
+            <div class="fr c2">
+              <div class="fg"><label>Categoria</label><select id="n-c"><option>Notícias</option><option>Projetos</option><option>Eventos</option><option>Parcerias</option><option>Premiações</option><option>Comunicados</option></select></div>
+              <div class="fg"><label>Data</label><input type="date" id="n-d"/></div>
+            </div>
+            <div class="fg"><label>Resumo</label><textarea id="n-r" style="min-height:75px" placeholder="Breve descrição para o cartão da notícia…"></textarea></div>
+          </div>
+          <div class="fc">
+            <h3>Texto completo</h3>
+            <div class="et">
+              <button onclick="fmt('bold')"><b>N</b></button><button onclick="fmt('italic')"><i>I</i></button>
+              <button onclick="fmt('underline')"><u>S</u></button><button onclick="fmt('insertUnorderedList')">• Lista</button>
+              <button onclick="fmt('insertOrderedList')">1. Num.</button><button onclick="fmt('removeFormat')">Limpar</button>
+            </div>
+            <div class="eb" contenteditable="true" id="n-tx"></div>
+          </div>
+          <div class="fa">
+            <button class="btn-p" onclick="salvarN('publicada')">Publicar</button>
+            <button class="btn-s" onclick="salvarN('rascunho')">Salvar rascunho</button>
+            <button class="btn-s" onclick="fecharN()">Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CRONOGRAMA -->
+      <div class="panel" id="panel-cronograma">
+        <div class="ph"><h2 class="pt">Cronograma</h2><button class="btn-p" onclick="abrirE()">+ Novo evento</button></div>
+        <div id="e-form-v" style="display:none;margin-bottom:1.2rem">
+          <div class="fc">
+            <h3 id="e-form-title">Novo evento</h3>
+            <div style="margin-bottom:1rem">
+              <p style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--cinza);margin-bottom:8px">Foto do evento (opcional)</p>
+              <div class="fub" onclick="document.getElementById('efi').click()">
+                <input type="file" id="efi" accept="image/*" onchange="handleFoto(this,'efp','efn','efa','efd')"/>
+                <div id="efp" class="fph"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+                <div class="fui">
+                  <strong>Foto do evento</strong><span>Clique para selecionar</span>
+                  <div class="fna" id="efn"></div>
+                  <div class="fua" id="efa" style="display:none"><button class="btn-d btn-sm" onclick="remFoto(event,'efi','efp','efn','efa','efd')">Remover</button></div>
+                </div>
+              </div>
+              <input type="hidden" id="efd"/>
+            </div>
+            <div class="fr c2">
+              <div class="fg"><label>Nome do evento</label><input id="e-n" placeholder="Ex: Oficina de empreendedorismo"/></div>
+              <div class="fg"><label>Tipo</label><select id="e-c"><option>Oficina</option><option>Reunião</option><option>Atendimento</option><option>Curso</option><option>Palestra</option><option>Evento externo</option><option>Outro</option></select></div>
+            </div>
+            <div class="fr c3">
+              <div class="fg"><label>Data</label><input type="date" id="e-d"/></div>
+              <div class="fg"><label>Horário</label><input type="time" id="e-h"/></div>
+              <div class="fg"><label>Local</label><input id="e-l" placeholder="Ex: Sede do instituto"/></div>
+            </div>
+            <div class="fg"><label>Descrição</label><textarea id="e-desc" style="min-height:70px" placeholder="Descreva o evento…"></textarea></div>
+            <div class="fa"><button class="btn-p" onclick="salvarE()">Salvar evento</button><button class="btn-s" onclick="fecharE()">Cancelar</button></div>
+          </div>
+        </div>
+        <div class="tw"><table class="lt">
+          <thead><tr><th style="width:52px">Foto</th><th>Evento</th><th>Tipo</th><th>Data</th><th>Horário</th><th>Local</th><th>Ações</th></tr></thead>
+          <tbody id="e-tbody"><tr><td colspan="7"><div class="es"><p>Nenhum evento ainda</p></div></td></tr></tbody>
+        </table></div>
+      </div>
+
+      <!-- GALERIA -->
+      <div class="panel" id="panel-galeria">
+        <div class="ph"><h2 class="pt">Galeria de fotos</h2><button class="btn-p" onclick="document.getElementById('gal-in').click()">+ Adicionar fotos</button></div>
+        <input type="file" id="gal-in" multiple accept="image/*" style="display:none" onchange="addGaleria(event)"/>
+        <div class="fc">
+          <h3>Fotos gerais do instituto</h3>
+          <p style="font-size:12px;color:var(--cinza);margin-bottom:.4rem">Fotos institucionais para uso geral no site.</p>
+          <div class="gg" id="gal-grid">
+            <div class="ga" onclick="document.getElementById('gal-in').click()">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>Adicionar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PÁGINAS -->
+      <div class="panel" id="panel-paginas">
+        <div id="pag-list-v">
+          <div class="ph"><h2 class="pt">Editar páginas do site</h2></div>
+          <div class="pg">
+            <div class="pcard" onclick="editPag('hero')"><h3>Página inicial</h3><p>Foto de fundo, título e subtítulo do hero</p><button class="btn-e">Editar</button></div>
+            <div class="pcard" onclick="editPag('sobre')"><h3>Sobre nós</h3><p>Foto, história e apresentação do instituto</p><button class="btn-e">Editar</button></div>
+            <div class="pcard" onclick="editPag('missao')"><h3>Missão, Visão e Valores</h3><p>Princípios do instituto</p><button class="btn-e">Editar</button></div>
+            <div class="pcard" onclick="editPag('presidencia')"><h3>Presidência e Liderança</h3><p>Foto da presidenta, bio e equipe diretiva</p><button class="btn-e">Editar</button></div>
+            <div class="pcard" onclick="editPag('projetos')"><h3>Projetos</h3><p>Foto, nome e descrição de cada projeto</p><button class="btn-e">Editar</button></div>
+            <div class="pcard" onclick="editPag('numeros')"><h3>Números de impacto</h3><p>Mulheres atendidas, projetos, anos</p><button class="btn-e">Editar</button></div>
+          </div>
+        </div>
+        <div id="pag-editor-v" style="display:none">
+          <div class="ph"><h2 class="pt" id="pag-title">Editar página</h2><button class="btn-s" onclick="fecharPag()">← Voltar</button></div>
+          <div class="fc"><h3 id="pag-sub">Conteúdo</h3><div id="pag-campos"></div><div class="fa"><button class="btn-p" onclick="salvarPag()">Salvar alterações</button></div></div>
+        </div>
+      </div>
+
+      <!-- CONFIG -->
+      <div class="panel" id="panel-config">
+        <div class="ph"><h2 class="pt">Configurações</h2></div>
+        <div class="fc">
+          <h3>Dados do instituto</h3>
+          <div class="fr c2">
+            <div class="fg"><label>Nome</label><input id="cfg-nome" placeholder="Instituto Marias"/></div>
+            <div class="fg"><label>E-mail</label><input id="cfg-email" placeholder="contato@institutomarias.org.br"/></div>
+          </div>
+          <div class="fr c2">
+            <div class="fg"><label>Telefone / WhatsApp</label><input id="cfg-tel" placeholder="(00) 00000-0000"/></div>
+            <div class="fg"><label>Endereço</label><input id="cfg-end" placeholder="Rua, nº, bairro — Cidade/UF"/></div>
+          </div>
+          <div class="fr c2">
+            <div class="fg"><label>Instagram</label><input id="cfg-ig" placeholder="@institutomarias"/></div>
+            <div class="fg"><label>Facebook</label><input id="cfg-fb" placeholder="facebook.com/institutomarias"/></div>
+          </div>
+          <div class="fg" style="margin-bottom:1rem"><label>Slogan</label><input id="cfg-slogan" placeholder="Frase de impacto do instituto"/></div>
+          <div class="fa"><button class="btn-p" onclick="salvarCfg()">Salvar</button></div>
+        </div>
+        <div class="fc">
+          <h3>Alterar senha</h3>
+          <div class="fr c2">
+            <div class="fg"><label>Nova senha</label><input type="password" id="cfg-s1" placeholder="Nova senha"/></div>
+            <div class="fg"><label>Confirmar</label><input type="password" id="cfg-s2" placeholder="Repita a senha"/></div>
+          </div>
+          <div class="fa"><button class="btn-p" onclick="trocarSenha()">Alterar senha</button></div>
+        </div>
+        <div class="fc">
+          <h3>Backup</h3>
+          <p style="font-size:13px;color:var(--cinza);margin-bottom:1.2rem;line-height:1.7">Os dados ficam salvos no navegador. Exporte regularmente.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn-s" onclick="exportar()">⬇ Exportar backup (.json)</button>
+            <button class="btn-s" onclick="document.getElementById('imp-in').click()">⬆ Importar backup</button>
+          </div>
+          <input type="file" id="imp-in" accept=".json" style="display:none" onchange="importar(event)"/>
+          <p style="font-size:11px;color:#bbb;margin-top:.8rem">Recomendado: exporte ao menos uma vez por semana.</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const CK='im_creds', DK='im_data';
+function gd(){try{const r=localStorage.getItem(DK);return r?JSON.parse(r):{noticias:[],eventos:[],fotos:[],paginas:{},config:{}}}catch(e){return{noticias:[],eventos:[],fotos:[],paginas:{},config:{}}}}
+function sd(d){localStorage.setItem(DK,JSON.stringify(d))}
+function gc(){try{const r=localStorage.getItem(CK);return r?JSON.parse(r):{user:'admin',pass:'marias2025'}}catch(e){return{user:'admin',pass:'marias2025'}}}
+function toast(m,t='success'){const el=document.getElementById('toast');el.textContent=m;el.style.background=t==='success'?'#2d7a4f':'#a32d2d';el.style.display='block';clearTimeout(el._t);el._t=setTimeout(()=>el.style.display='none',3000)}
+function fmtD(iso){if(!iso)return'—';return new Date(iso+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'short'})}
+function fmt(cmd){document.execCommand(cmd,false,null)}
+
+function doLogin(){
+  const u=document.getElementById('lu').value.trim(),p=document.getElementById('lp').value,c=gc();
+  if(u===c.user&&p===c.pass){
+    document.getElementById('login-screen').style.display='none';
+    const app=document.getElementById('app');app.style.display='flex';
+    document.getElementById('tbu').textContent=u;
+    initDash();renderGal();
+  }else{document.getElementById('lerr').style.display='block'}
+}
+function doLogout(){
+  document.getElementById('app').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('lp').value='';
+  document.getElementById('lerr').style.display='none';
+}
+function showPanel(name,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  if(el)el.classList.add('active');
+  if(name==='dashboard')initDash();
+  if(name==='noticias')renderN();
+  if(name==='cronograma')renderE();
+  if(name==='config')loadCfg();
+}
+
+/* DASHBOARD */
+function initDash(){
+  const d=gd();
+  const pub=d.noticias.filter(n=>n.status==='publicada');
+  document.getElementById('st-n').textContent=pub.length;
+  document.getElementById('st-e').textContent=d.eventos.length;
+  document.getElementById('st-f').textContent=d.fotos.length;
+  document.getElementById('st-r').textContent=d.noticias.filter(n=>n.status==='rascunho').length;
+  document.getElementById('dash-date').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const nl=document.getElementById('dn-list');
+  const ult=pub.slice(-4).reverse();
+  nl.innerHTML=ult.length?ult.map(n=>`<div class="ri">${n.foto?`<img src="${n.foto}" style="width:32px;height:32px;border-radius:4px;object-fit:cover;flex-shrink:0"/>`:'<div style="width:32px;height:32px;border-radius:4px;background:var(--creme);border:1px solid var(--borda);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px">📰</div>'}<span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n.titulo}</span><span style="font-size:11px;color:var(--cinza);flex-shrink:0">${fmtD(n.data)}</span></div>`).join(''):'<div class="es"><p>Nenhuma notícia ainda</p></div>';
+  const el=document.getElementById('de-list');
+  const hoje=new Date().toISOString().split('T')[0];
+  const prox=d.eventos.filter(e=>e.data>=hoje).slice(0,4);
+  el.innerHTML=prox.length?prox.map(e=>`<div class="ri"><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.nome}</span><span style="font-size:11px;color:var(--cinza);flex-shrink:0">${fmtD(e.data)}</span></div>`).join(''):'<div class="es"><p>Nenhum evento próximo</p></div>';
+}
+
+/* FOTO HELPERS */
+function handleFoto(inp,prevId,nomeId,actsId,dataId){
+  const file=inp.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const prev=document.getElementById(prevId);
+    if(prev)prev.outerHTML=`<img id="${prevId}" class="fp" src="${ev.target.result}" alt="foto"/>`;
+    document.getElementById(nomeId).textContent=file.name;
+    const acts=document.getElementById(actsId);if(acts)acts.style.display='flex';
+    document.getElementById(dataId).value=ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+function remFoto(ev,inpId,prevId,nomeId,actsId,dataId){
+  ev.stopPropagation();
+  document.getElementById(inpId).value='';
+  document.getElementById(nomeId).textContent='';
+  document.getElementById(dataId).value='';
+  const acts=document.getElementById(actsId);if(acts)acts.style.display='none';
+  const prev=document.getElementById(prevId);
+  if(prev)prev.outerHTML=`<div id="${prevId}" class="fph"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`;
+}
+function loadFoto(src,prevId,nomeId,actsId,dataId){
+  if(!src){
+    const prev=document.getElementById(prevId);
+    if(prev&&prev.tagName==='IMG')prev.outerHTML=`<div id="${prevId}" class="fph"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`;
+    document.getElementById(nomeId).textContent='';
+    const acts=document.getElementById(actsId);if(acts)acts.style.display='none';
+    document.getElementById(dataId).value='';
+    return;
+  }
+  const prev=document.getElementById(prevId);
+  if(prev)prev.outerHTML=`<img id="${prevId}" class="fp" src="${src}" alt="foto"/>`;
+  document.getElementById(nomeId).textContent='Foto atual';
+  const acts=document.getElementById(actsId);if(acts)acts.style.display='flex';
+  document.getElementById(dataId).value=src;
+}
+function thumbHtml(src){
+  return src?`<div class="th"><img src="${src}" alt=""/></div>`:`<div class="th">📷</div>`;
+}
+
+/* NOTÍCIAS */
+let _ni=null;
+function abrirN(idx){
+  _ni=idx!==undefined?idx:null;
+  document.getElementById('n-list-v').style.display='none';
+  document.getElementById('n-form-v').style.display='block';
+  if(_ni!==null){
+    const n=gd().noticias[_ni];
+    document.getElementById('n-form-title').textContent='Editar notícia';
+    document.getElementById('n-t').value=n.titulo;
+    document.getElementById('n-c').value=n.categoria;
+    document.getElementById('n-d').value=n.data;
+    document.getElementById('n-r').value=n.resumo;
+    document.getElementById('n-tx').innerHTML=n.texto;
+    loadFoto(n.foto||'','nfp','nfn','nfa','nfd');
+  }else{
+    document.getElementById('n-form-title').textContent='Nova notícia';
+    ['n-t','n-r'].forEach(i=>document.getElementById(i).value='');
+    document.getElementById('n-c').value='Notícias';
+    document.getElementById('n-d').value=new Date().toISOString().split('T')[0];
+    document.getElementById('n-tx').innerHTML='';
+    document.getElementById('nfi').value='';
+    loadFoto('','nfp','nfn','nfa','nfd');
+  }
+}
+function fecharN(){document.getElementById('n-list-v').style.display='block';document.getElementById('n-form-v').style.display='none';renderN()}
+function salvarN(status){
+  const titulo=document.getElementById('n-t').value.trim();
+  if(!titulo){toast('Preencha o título','error');return}
+  const d=gd();
+  const n={titulo,status,categoria:document.getElementById('n-c').value,data:document.getElementById('n-d').value,resumo:document.getElementById('n-r').value,texto:document.getElementById('n-tx').innerHTML,foto:document.getElementById('nfd').value||'',atualizadoEm:new Date().toISOString()};
+  if(_ni!==null)d.noticias[_ni]=n;else d.noticias.push(n);
+  sd(d);toast(status==='publicada'?'Notícia publicada!':'Rascunho salvo!');fecharN();
+}
+function delN(i){if(!confirm('Excluir esta notícia?'))return;const d=gd();d.noticias.splice(i,1);sd(d);renderN();toast('Notícia excluída.')}
+function renderN(){
+  const d=gd();const tb=document.getElementById('n-tbody');
+  if(!d.noticias.length){tb.innerHTML='<tr><td colspan="6"><div class="es"><p>Nenhuma notícia ainda</p></div></td></tr>';return}
+  tb.innerHTML=d.noticias.slice().reverse().map((n,ri)=>{
+    const i=d.noticias.length-1-ri;
+    return`<tr><td>${thumbHtml(n.foto)}</td><td style="font-weight:500;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n.titulo}</td><td><span class="badge bc">${n.categoria}</span></td><td>${fmtD(n.data)}</td><td><span class="badge ${n.status==='publicada'?'bp':'bd'}">${n.status==='publicada'?'Publicada':'Rascunho'}</span></td><td><div class="tda"><button class="btn-e btn-sm" onclick="abrirN(${i})">Editar</button><button class="btn-d btn-sm" onclick="delN(${i})">Excluir</button></div></td></tr>`;
+  }).join('');
+}
+
+/* EVENTOS */
+let _ei=null;
+function abrirE(idx){
+  _ei=idx!==undefined?idx:null;
+  document.getElementById('e-form-v').style.display='block';
+  if(_ei!==null){
+    const e=gd().eventos[_ei];
+    document.getElementById('e-form-title').textContent='Editar evento';
+    document.getElementById('e-n').value=e.nome;document.getElementById('e-c').value=e.cat;
+    document.getElementById('e-d').value=e.data;document.getElementById('e-h').value=e.hora;
+    document.getElementById('e-l').value=e.local;document.getElementById('e-desc').value=e.desc;
+    loadFoto(e.foto||'','efp','efn','efa','efd');
+  }else{
+    document.getElementById('e-form-title').textContent='Novo evento';
+    ['e-n','e-h','e-l','e-desc'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('e-d').value=new Date().toISOString().split('T')[0];
+    document.getElementById('e-c').value='Oficina';
+    document.getElementById('efi').value='';
+    loadFoto('','efp','efn','efa','efd');
+  }
+  document.getElementById('e-n').focus();
+}
+function fecharE(){document.getElementById('e-form-v').style.display='none';_ei=null}
+function salvarE(){
+  const nome=document.getElementById('e-n').value.trim();
+  if(!nome){toast('Preencha o nome do evento','error');return}
+  const d=gd();
+  const e={nome,cat:document.getElementById('e-c').value,data:document.getElementById('e-d').value,hora:document.getElementById('e-h').value,local:document.getElementById('e-l').value,desc:document.getElementById('e-desc').value,foto:document.getElementById('efd').value||''};
+  if(_ei!==null)d.eventos[_ei]=e;else d.eventos.push(e);
+  d.eventos.sort((a,b)=>a.data.localeCompare(b.data));
+  sd(d);toast('Evento salvo!');fecharE();renderE();
+}
+function delE(i){if(!confirm('Excluir?'))return;const d=gd();d.eventos.splice(i,1);sd(d);renderE();toast('Evento excluído.')}
+function renderE(){
+  const d=gd();const tb=document.getElementById('e-tbody');
+  if(!d.eventos.length){tb.innerHTML='<tr><td colspan="7"><div class="es"><p>Nenhum evento ainda</p></div></td></tr>';return}
+  const hoje=new Date().toISOString().split('T')[0];
+  tb.innerHTML=d.eventos.map((e,i)=>`<tr style="${e.data<hoje?'opacity:.55':''}"><td>${thumbHtml(e.foto)}</td><td style="font-weight:500">${e.nome}</td><td><span class="badge bc">${e.cat}</span></td><td>${fmtD(e.data)}</td><td>${e.hora||'—'}</td><td>${e.local||'—'}</td><td><div class="tda"><button class="btn-e btn-sm" onclick="abrirE(${i})">Editar</button><button class="btn-d btn-sm" onclick="delE(${i})">Excluir</button></div></td></tr>`).join('');
+}
+
+/* GALERIA */
+function addGaleria(ev){
+  const files=Array.from(ev.target.files);if(!files.length)return;
+  const d=gd();let done=0;
+  files.forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=e=>{d.fotos.push({src:e.target.result,nome:file.name,data:new Date().toISOString()});done++;if(done===files.length){sd(d);renderGal();toast(`${files.length} foto(s) adicionada(s)!`)}};
+    reader.readAsDataURL(file);
+  });ev.target.value='';
+}
+function delGal(i){if(!confirm('Excluir?'))return;const d=gd();d.fotos.splice(i,1);sd(d);renderGal();toast('Foto excluída.')}
+function renderGal(){
+  const d=gd();const g=document.getElementById('gal-grid');if(!g)return;
+  const add=`<div class="ga" onclick="document.getElementById('gal-in').click()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>Adicionar</span></div>`;
+  g.innerHTML=d.fotos.map((f,i)=>`<div class="gi"><img src="${f.src}" alt="${f.nome}" loading="lazy"/><button class="gd" onclick="delGal(${i})">✕ Excluir</button><div class="gn">${f.nome}</div></div>`).join('')+add;
+}
+
+/* PÁGINAS */
+let _pag=null;
+const _pagCfg={
+  hero:{titulo:'Página inicial (Hero)',campos:[
+    {id:'p-hero-titulo',label:'Título principal',tipo:'input',placeholder:'Ex: Transformando vidas na periferia'},
+    {id:'p-hero-desc',label:'Subtítulo / descrição',tipo:'textarea',placeholder:'Frase de apresentação…',h:'70px'},
+    {id:'p-hero-foto',label:'Foto de fundo do hero',tipo:'foto'},
+  ]},
+  sobre:{titulo:'Sobre nós',campos:[
+    {id:'p-sobre-foto',label:'Foto da seção "Sobre nós"',tipo:'foto'},
+    {id:'p-sobre-titulo',label:'Título da seção',tipo:'input',placeholder:'Ex: Quem somos'},
+    {id:'p-sobre-historia',label:'História do instituto',tipo:'textarea',placeholder:'Como surgiu, quando foi fundado…'},
+    {id:'p-sobre-publico',label:'Público e área de atuação',tipo:'textarea',placeholder:'Quem atende e onde atua…'},
+  ]},
+  missao:{titulo:'Missão, Visão e Valores',campos:[
+    {id:'p-missao',label:'Missão',tipo:'textarea',placeholder:'O que faz, para quem e com qual propósito…'},
+    {id:'p-visao',label:'Visão',tipo:'textarea',placeholder:'O futuro que quer construir…'},
+    {id:'p-valores',label:'Valores (separe por vírgula)',tipo:'input',placeholder:'Ex: Solidariedade, Respeito, Equidade…'},
+  ]},
+  presidencia:{titulo:'Presidência e Liderança',campos:[
+    {id:'p-pres-foto',label:'Foto da presidenta',tipo:'foto'},
+    {id:'p-pres-nome',label:'Nome da presidenta',tipo:'input',placeholder:'Nome completo'},
+    {id:'p-pres-cargo',label:'Cargo',tipo:'input',placeholder:'Ex: Presidenta'},
+    {id:'p-pres-bio',label:'Biografia',tipo:'textarea',placeholder:'Trajetória, motivações…'},
+    {id:'p-vice',label:'Vice-presidência — Nome',tipo:'input',placeholder:'Nome completo'},
+    {id:'p-sec',label:'Secretaria — Nome',tipo:'input',placeholder:'Nome completo'},
+    {id:'p-tes',label:'Tesouraria — Nome',tipo:'input',placeholder:'Nome completo'},
+  ]},
+  projetos:{titulo:'Projetos',campos:[
+    {id:'p-p1-foto',label:'Projeto 1 — Foto',tipo:'foto'},
+    {id:'p-p1-nome',label:'Projeto 1 — Nome',tipo:'input',placeholder:'Nome do projeto'},
+    {id:'p-p1-cat',label:'Projeto 1 — Categoria',tipo:'input',placeholder:'Ex: Capacitação'},
+    {id:'p-p1-desc',label:'Projeto 1 — Descrição',tipo:'textarea',placeholder:'Objetivo e impacto…'},
+    {id:'p-p2-foto',label:'Projeto 2 — Foto',tipo:'foto'},
+    {id:'p-p2-nome',label:'Projeto 2 — Nome',tipo:'input',placeholder:'Nome do projeto'},
+    {id:'p-p2-cat',label:'Projeto 2 — Categoria',tipo:'input',placeholder:'Ex: Assistência Social'},
+    {id:'p-p2-desc',label:'Projeto 2 — Descrição',tipo:'textarea',placeholder:'Objetivo e impacto…'},
+    {id:'p-p3-foto',label:'Projeto 3 — Foto',tipo:'foto'},
+    {id:'p-p3-nome',label:'Projeto 3 — Nome',tipo:'input',placeholder:'Nome do projeto'},
+    {id:'p-p3-cat',label:'Projeto 3 — Categoria',tipo:'input',placeholder:'Ex: Saúde'},
+    {id:'p-p3-desc',label:'Projeto 3 — Descrição',tipo:'textarea',placeholder:'Objetivo e impacto…'},
+  ]},
+  numeros:{titulo:'Números de impacto',campos:[
+    {id:'p-num-at',label:'Mulheres atendidas',tipo:'input',placeholder:'Ex: 1.200'},
+    {id:'p-num-pr',label:'Projetos ativos',tipo:'input',placeholder:'Ex: 8'},
+    {id:'p-num-an',label:'Anos de atuação',tipo:'input',placeholder:'Ex: 5'},
+  ]},
+};
+
+function editPag(slug){
+  _pag=slug;
+  const cfg=_pagCfg[slug];
+  const d=gd();const saved=d.paginas[slug]||{};
+  document.getElementById('pag-list-v').style.display='none';
+  document.getElementById('pag-editor-v').style.display='block';
+  document.getElementById('pag-title').textContent='Editar: '+cfg.titulo;
+  document.getElementById('pag-sub').textContent=cfg.titulo;
+  document.getElementById('pag-campos').innerHTML=cfg.campos.map(c=>{
+    if(c.tipo==='foto'){
+      const sid=c.id+'-d';const hasFoto=!!saved[c.id];
+      return`<div style="margin-bottom:1rem">
+        <p style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--cinza);margin-bottom:8px">${c.label}</p>
+        <div class="fub" onclick="document.getElementById('pfi-${c.id}').click()">
+          <input type="file" id="pfi-${c.id}" accept="image/*" data-cid="${c.id}"/>
+          ${hasFoto?`<img id="pp-${c.id}" class="fp" src="${saved[c.id]}" alt="foto"/>`:`<div id="pp-${c.id}" class="fph"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`}
+          <div class="fui">
+            <strong>Clique para selecionar</strong><span>JPG ou PNG</span>
+            <div class="fna" id="pn-${c.id}">${hasFoto?'Foto atual':''}</div>
+            <div class="fua" id="pa-${c.id}" style="display:${hasFoto?'flex':'none'}">
+              <button class="btn-d btn-sm" onclick="remFoto(event,'pfi-${c.id}','pp-${c.id}','pn-${c.id}','pa-${c.id}','${sid}')">Remover</button>
+            </div>
+          </div>
+        </div>
+        <input type="hidden" id="${sid}" value="${saved[c.id]||''}"/>
+      </div>`;
+    }
+    if(c.tipo==='textarea')return`<div class="fg" style="margin-bottom:1rem"><label>${c.label}</label><textarea id="${c.id}" placeholder="${c.placeholder}" style="min-height:${c.h||'90px'}">${saved[c.id]||''}</textarea></div>`;
+    return`<div class="fg" style="margin-bottom:1rem"><label>${c.label}</label><input id="${c.id}" placeholder="${c.placeholder}" value="${(saved[c.id]||'').replace(/"/g,'&quot;')}"/></div>`;
+  }).join('');
+  // bind file inputs for pages
+  cfg.campos.filter(c=>c.tipo==='foto').forEach(c=>{
+    const inp=document.getElementById('pfi-'+c.id);if(!inp)return;
+    inp.addEventListener('change',function(){
+      const file=this.files[0];if(!file)return;
+      const reader=new FileReader();
+      reader.onload=ev=>{
+        const prev=document.getElementById('pp-'+c.id);
+        if(prev)prev.outerHTML=`<img id="pp-${c.id}" class="fp" src="${ev.target.result}" alt="foto"/>`;
+        document.getElementById('pn-'+c.id).textContent=file.name;
+        const acts=document.getElementById('pa-'+c.id);if(acts)acts.style.display='flex';
+        document.getElementById(c.id+'-d').value=ev.target.result;
+      };reader.readAsDataURL(file);
+    });
+  });
+}
+function salvarPag(){
+  const d=gd();const cfg=_pagCfg[_pag];const vals={};
+  cfg.campos.forEach(c=>{
+    if(c.tipo==='foto')vals[c.id]=document.getElementById(c.id+'-d').value;
+    else vals[c.id]=document.getElementById(c.id).value;
+  });
+  d.paginas[_pag]=vals;sd(d);toast('Página salva!');
+}
+function fecharPag(){
+  document.getElementById('pag-editor-v').style.display='none';
+  document.getElementById('pag-list-v').style.display='block';
+  _pag=null;
+}
+
+/* CONFIG */
+function loadCfg(){
+  const cfg=gd().config||{};
+  ['nome','email','tel','end','ig','fb','slogan'].forEach(k=>{const el=document.getElementById('cfg-'+k);if(el)el.value=cfg[k]||''});
+}
+function salvarCfg(){
+  const d=gd();d.config={};
+  ['nome','email','tel','end','ig','fb','slogan'].forEach(k=>{d.config[k]=document.getElementById('cfg-'+k).value});
+  sd(d);toast('Configurações salvas!');
+}
+function trocarSenha(){
+  const s1=document.getElementById('cfg-s1').value,s2=document.getElementById('cfg-s2').value;
+  if(!s1){toast('Digite a nova senha','error');return}
+  if(s1!==s2){toast('As senhas não conferem','error');return}
+  if(s1.length<6){toast('Mínimo 6 caracteres','error');return}
+  const c=gc();c.pass=s1;localStorage.setItem(CK,JSON.stringify(c));
+  document.getElementById('cfg-s1').value='';document.getElementById('cfg-s2').value='';
+  toast('Senha alterada!');
+}
+function exportar(){
+  const blob=new Blob([JSON.stringify(gd(),null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='backup-instituto-marias-'+new Date().toISOString().split('T')[0]+'.json';a.click();toast('Backup exportado!');
+}
+function importar(ev){
+  const file=ev.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{const d=JSON.parse(e.target.result);if(!d.noticias||!d.eventos)throw new Error();sd(d);toast('Dados importados!');initDash();renderGal();}
+    catch{toast('Arquivo inválido.','error')}
+  };reader.readAsText(file);ev.target.value='';
+}
+
+/* INIT */
+document.getElementById('dash-date').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+</script>
+</body>
+</html>
