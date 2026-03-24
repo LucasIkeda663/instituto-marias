@@ -1,0 +1,37 @@
+backend:
+name: git-gateway
+branch: main
+media_folder: imagens/uploads
+public_folder: /imagens/uploads
+collections:
+- name: noticias
+label: Noticias
+folder: _noticias
+create: true
+fields:
+- {label: Titulo, name: titulo, widget: string}
+- {label: Data, name: data, widget: datetime}
+- {label: Categoria, name: categoria, widget: string}
+- {label: Resumo, name: resumo, widget: text}
+- {label: Foto, name: foto, widget: image, required: false}
+- {label: Texto completo, name: body, widget: markdown}
+- name: eventos
+label: Cronograma
+folder: _eventos
+create: true
+fields:
+- {label: Nome do evento, name: nome, widget: string}
+- {label: Data, name: data, widget: datetime}
+- {label: Horario, name: horario, widget: string}
+- {label: Local, name: local, widget: string}
+- {label: Foto, name: foto, widget: image, required: false}
+- {label: Descricao, name: body, widget: markdown}
+- name: paginas
+label: Paginas
+files:
+- label: Sobre nos
+name: sobre
+file: _dados/sobre.md
+fields:
+- {label: Texto, name: body, widget: markdown}
+- {label: Foto, name: foto, widget: image, required: false}
